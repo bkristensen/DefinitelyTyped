@@ -1,7 +1,16 @@
-﻿// Type definitions for Chrome extension development.
+// Type definitions for Chrome extension development
 // Project: http://developer.chrome.com/extensions/
-// Definitions by: Matthew Kimber <https://github.com/matthewkimber>
+// Definitions by: Matthew Kimber <https://github.com/matthewkimber>, otiai10 <https://github.com/otiai10>
 // Definitions: https://github.com/borisyankov/DefinitelyTyped
+
+/// <reference path='../webrtc/MediaStream.d.ts'/>
+
+////////////////////
+// Global object
+////////////////////
+interface Window {
+    chrome: typeof chrome;
+}
 
 ////////////////////
 // Alarms
@@ -19,8 +28,8 @@ declare module chrome.alarms {
         name: string;
     }
 
-    interface AlarmEvent extends chrome.events.Event { 
-        addListener(callback: (alarm: Alarm) => void);
+    interface AlarmEvent extends chrome.events.Event {
+        addListener(callback: (alarm: Alarm) => void): void;
     }
 
     export function create(alarmInfo: AlarmCreateInfo): void;
@@ -30,8 +39,39 @@ declare module chrome.alarms {
     export function clear(name?: string): void;
     export function get(callback: (alarm: Alarm) => void): void;
     export function get(name: string, callback: (alarm: Alarm) => void): void;
-    
+
     var onAlarm: AlarmEvent;
+}
+
+/**
+ * Use the chrome.browser API to interact with the Chrome browser associated with 
+ * the current application and Chrome profile. 
+ */
+declare module chrome.browser {
+    interface Options {
+        /**
+         * The URL to navigate to when the new tab is initially opened.
+         */
+        url:string;
+    }
+    
+    /**
+     * Opens a new tab in a browser window associated with the current application 
+     * and Chrome profile. If no browser window for the Chrome profile is opened, 
+     * a new one is opened prior to creating the new tab. 
+     * @param options Configures how the tab should be opened. 
+     * @param callback Called when the tab was successfully 
+     * created, or failed to be created. If failed, runtime.lastError will be set.
+     */
+    export function openTab (options: Options, callback: () => void): void;
+     
+     /**
+     * Opens a new tab in a browser window associated with the current application 
+     * and Chrome profile. If no browser window for the Chrome profile is opened, 
+     * a new one is opened prior to creating the new tab. Since Chrome 42 only. 
+     * @param options Configures how the tab should be opened. 
+     */
+    export function openTab (options: Options): void;
 }
 
 ////////////////////
@@ -58,7 +98,7 @@ declare module chrome.bookmarks {
         index: number;
         oldIndex: number;
         parentId: string;
-        oldParentId: string;    
+        oldParentId: string;
     }
 
     interface BookmarkChangeInfo {
@@ -70,32 +110,32 @@ declare module chrome.bookmarks {
         childIds: string[];
     }
 
-    interface BookmarkRemovedEvent extends chrome.events.Event { 
-        addListener(callback: (id: string, removeInfo: BookmarkRemoveInfo) => void);
+    interface BookmarkRemovedEvent extends chrome.events.Event {
+        addListener(callback: (id: string, removeInfo: BookmarkRemoveInfo) => void): void;
     }
 
     interface BookmarkImportEndedEvent extends chrome.events.Event {
-        addListener(callback: Function);
+        addListener(callback: Function): void;
     }
 
     interface BookmarkMovedEvent extends chrome.events.Event {
-        addListener(callback: (id: string, moveInfo: BookmarkMoveInfo) => void);
+        addListener(callback: (id: string, moveInfo: BookmarkMoveInfo) => void): void;
     }
 
     interface BookmarkImportBeganEvent extends chrome.events.Event {
-        addListener(callback: Function);
+        addListener(callback: Function): void;
     }
 
     interface BookmarkChangedEvent extends chrome.events.Event {
-        addListener(callback: (id: string, changeInfo: BookmarkChangeInfo) => void);
+        addListener(callback: (id: string, changeInfo: BookmarkChangeInfo) => void): void;
     }
 
     interface BookmarkCreatedEvent extends chrome.events.Event {
-        addListener(callback: (id: string, bookmark: BookmarkTreeNode) => void);
+        addListener(callback: (id: string, bookmark: BookmarkTreeNode) => void): void;
     }
 
     interface BookmarkChildrenReordered extends chrome.events.Event {
-        addListener(callback: (id: string, reorderInfo: BookmarkReorderInfo) => void);
+        addListener(callback: (id: string, reorderInfo: BookmarkReorderInfo) => void): void;
     }
 
     var MAX_WRITE_OPERATIONS_PER_HOUR: number;
@@ -114,10 +154,11 @@ declare module chrome.bookmarks {
     export function getSubTree(id: string, callback: (results: BookmarkTreeNode[]) => void): void;
     export function removeTree(id: string, callback?: Function): void;
 
-    var onRemoved: chrome.alarms.AlarmEvent;
+    var onRemoved: BookmarkRemovedEvent;
     var onImportEnded: BookmarkImportEndedEvent;
     var onImportBegan: BookmarkImportBeganEvent;
     var onChanged: BookmarkChangedEvent;
+    var onMoved: BookmarkMovedEvent;
     var onCreated: BookmarkCreatedEvent;
     var onChildrenReordered: BookmarkChildrenReordered;
 }
@@ -157,7 +198,7 @@ declare module chrome.browserAction {
     }
 
     interface BrowserClickedEvent extends chrome.events.Event {
-        addListener(callback: (tab: chrome.tabs.Tab) => void);
+        addListener(callback: (tab: chrome.tabs.Tab) => void): void;
     }
 
     export function enable(tabId?: number): void;
@@ -206,29 +247,29 @@ declare module chrome.browsingData {
         history?: boolean;
     }
 
-    export function removePluginData(options: RemovalOptions, callback?: Function);
-    export function removeFormData(options: RemovalOptions, callback?: Function);
-    export function removeFileSystems(options: RemovalOptions, callback?: Function);
-    export function remove(options: RemovalOptions, dataToRemove: DataToRemove, callback?: Function);
-    export function removePasswords(options: RemovalOptions, callback?: Function);
-    export function removeCookies(options: RemovalOptions, callback?: Function);
-    export function removeWebSQL(options: RemovalOptions, callback?: Function);
-    export function removeAppcache(options: RemovalOptions, callback?: Function);
-    export function removeDownloads(options: RemovalOptions, callback?: Function);
-    export function removeLocalStorage(options: RemovalOptions, callback?: Function);
-    export function removeCache(options: RemovalOptions, callback?: Function);
-    export function removeHistory(options: RemovalOptions, callback?: Function);
-    export function removeIndexedDB(options: RemovalOptions, callback?: Function);
+    export function removePluginData(options: RemovalOptions, callback?: Function): void;
+    export function removeFormData(options: RemovalOptions, callback?: Function): void;
+    export function removeFileSystems(options: RemovalOptions, callback?: Function): void;
+    export function remove(options: RemovalOptions, dataToRemove: DataToRemove, callback?: Function): void;
+    export function removePasswords(options: RemovalOptions, callback?: Function): void;
+    export function removeCookies(options: RemovalOptions, callback?: Function): void;
+    export function removeWebSQL(options: RemovalOptions, callback?: Function): void;
+    export function removeAppcache(options: RemovalOptions, callback?: Function): void;
+    export function removeDownloads(options: RemovalOptions, callback?: Function): void;
+    export function removeLocalStorage(options: RemovalOptions, callback?: Function): void;
+    export function removeCache(options: RemovalOptions, callback?: Function): void;
+    export function removeHistory(options: RemovalOptions, callback?: Function): void;
+    export function removeIndexedDB(options: RemovalOptions, callback?: Function): void;
 }
 
 ////////////////////
 // Commands
 ////////////////////
 declare module chrome.commands {
-    interface CommandEvent extends chrome.events.Event { 
-        addListener(callback: (command: string) => void);
+    interface CommandEvent extends chrome.events.Event {
+        addListener(callback: (command: string) => void): void;
     }
-        
+
     var onCommand: CommandEvent;
 }
 
@@ -294,6 +335,7 @@ declare module chrome.contextMenus {
         pageUrl: string;
         linkUrl?: string;
         parentMenuItemId?: any;
+        srcUrl?: string;
     }
 
     interface CreateProperties {
@@ -394,7 +436,7 @@ declare module chrome.cookies {
     }
 
     export function getAllCookieStores(callback: (cookieStores: CookieStore[]) => void): void;
-    export function getAll(details: GetAllDetails, callback: (cookies: Cookie) => void): void;
+    export function getAll(details: GetAllDetails, callback: (cookies: Cookie[]) => void): void;
     export function set(details: SetDetails, callback?: (cookie?: Cookie) => void): void;
     export function remove(details: Details, callback?: (details: Details) => void): void;
     export function get(details: Details, callback: (cookie?: Cookie) => void): void;
@@ -468,7 +510,7 @@ declare module chrome.declarativeWebRequest {
         lowerPriorityThan: number;
     }
 
-    interface RedirectToEmptyDocument {}
+    interface RedirectToEmptyDocument { }
 
     interface RedirectRequest {
         redirectUrl: string;
@@ -494,7 +536,7 @@ declare module chrome.declarativeWebRequest {
         modification: ResponseCookie;
     }
 
-    interface CancelRequest {}
+    interface CancelRequest { }
 
     interface RemoveRequestHeader {
         name: string;
@@ -520,7 +562,7 @@ declare module chrome.declarativeWebRequest {
         from: string;
     }
 
-    interface RedirectToTransparentImage {}
+    interface RedirectToTransparentImage { }
 
     interface AddRequestCookie {
         cookie: RequestCookie;
@@ -532,9 +574,17 @@ declare module chrome.declarativeWebRequest {
 
     interface RequestedEvent extends chrome.events.Event {
         addListener(callback: Function): void;
-    }    
+    }
 
     var onRequest: RequestedEvent;
+}
+
+////////////////////
+// DesktopCapture
+////////////////////
+declare module chrome.desktopCapture {
+    export function chooseDesktopMedia(sources: string[], targetTab?: chrome.tabs.Tab, callback?: (streamId: string) => void): void;
+    export function cancelChooseDesktopMedia(desktopMediaRequestId: number): void;
 }
 
 ////////////////////
@@ -617,11 +667,11 @@ declare module chrome.devtools.panels {
     }
 
     interface ButtonClickedEvent extends chrome.events.Event {
-        addListener(callback: Function);
+        addListener(callback: Function): void;
     }
 
     interface Button {
-        update(iconPath?: string, tooltipText?: string, disabled?: boolean);
+        update(iconPath?: string, tooltipText?: string, disabled?: boolean): void;
         onClicked: ButtonClickedEvent;
     }
 
@@ -775,6 +825,14 @@ declare module chrome.downloads {
     export function resume(downloadId: number, callback?: Function): void;
     export function cancel(downloadId: number, callback?: Function): void;
     export function download(options: DownloadOptions, callback?: (downloadId: number) => void): void;
+    export function open(downloadId: number): void;
+    export function show(downloadId: number): void;
+    export function showDefaultFolder(): void;
+    export function erase(query: DownloadQuery, callback: (results: DownloadItem[]) => void): void;
+    export function removeFile(downloadId: number, callback: () => void): void;
+    export function acceptDanger(downloadId: number, callback: () => void): void;
+    export function drag(downloadId: number): void;
+    export function setShelfEnabled(enabled: boolean): void;
 
     var onChanged: DownloadChangedEvent;
     var onCreated: DownloadCreatedEvent;
@@ -830,61 +888,24 @@ declare module chrome.events {
 // Extension
 ////////////////////
 declare module chrome.extension {
-    interface MessageSender {
-        id: string;
-        tab?: chrome.tabs.Tab;
-    }
-
-    interface Port {
-        postMessage: Function;
-        sender?: MessageSender;
-        onDisconnect: chrome.events.Event;
-        onMessage: chrome.events.Event;
-        name: string;
-    }
-
     interface FetchProperties {
         windowId?: number;
         type?: string;
     }
 
-    interface ConnectInfo {
-        name?: string;
-    }
-
-    interface ExtensionMessageEvent extends chrome.events.Event {
-        addListener(callback: (message: any, sender: MessageSender, sendResponse: Function) => void): void;
-    }
-
-    interface ExtensionMessageExternalEvent extends chrome.events.Event {
-        addListener(callback: (message: any, sender: MessageSender, sendResponse: Function) => void): void;
-    }
-
-    interface ExtensionConnectEvent extends chrome.events.Event {
-        addListener(callback: (port: Port) => void): void;
-    }
-
-    interface ExtensionConnectExternalEvent extends chrome.events.Event {
-        addListener(callback: (port: Port) => void): void;
+    interface LastError {
+        message?: string;
     }
 
     var inIncognitoContext: boolean;
-    var lastError: Object;
+    var lastError: LastError;
 
     export function getBackgroundPage(): Window;
     export function getURL(path: string): string;
     export function setUpdateUrlData(data: string): void;
     export function getViews(fetchProperties?: FetchProperties): Window[];
     export function isAllowedFileSchemeAccess(callback: (isAllowedAccess: boolean) => void): void;
-    export function sendMessage(message: any, responseCallback?: (response: any) => void): void;
-    export function sendMessage(extensionId: string, message: any, responseCallback?: (response: any) => void): void;
-    export function connect(extensionId?: string, connectInfo?: ConnectInfo): Port;
-    export function isAllowedIncognitoAccess(callback: (isAllowedAccess) => void): void;
-
-    var onMessage: ExtensionMessageEvent;
-    var onMessageExternal: ExtensionMessageExternalEvent;
-    var onConnect: ExtensionConnectEvent;
-    var onConnectExternal: ExtensionConnectExternalEvent;
+    export function isAllowedIncognitoAccess(callback: (isAllowedAccess: boolean) => void): void;
 }
 
 ////////////////////
@@ -904,7 +925,7 @@ declare module chrome.fileBrowserHandler {
     interface FileHandlerExecuteEventDetails {
         tab_id?: number;
         entries: any[];
-        selectFile(selectionParams: SelectionParams, callback:(result: SelectionResult) => void): void;
+        selectFile(selectionParams: SelectionParams, callback: (result: SelectionResult) => void): void;
     }
 
     interface FileBrowserHandlerExecuteEvent extends chrome.events.Event {
@@ -1056,12 +1077,23 @@ declare module chrome.history {
     var onVisitRemoved: HistoryVisitRemovedEvent;
 }
 
+
+////////////////////
+// Identity
+////////////////////
+declare module chrome.identity {
+    var getAuthToken: (options: any, cb: (token: {}) => void) => void;
+    var launchWebAuthFlow: (options: any, cb: (redirect_url: string) => void) => void;
+}
+
+
 ////////////////////
 // Internationalization
 ////////////////////
 declare module chrome.i18n {
     export function getMessage(messageName: string, substitutions?: any): string;
     export function getAcceptLanguages(callback: (languages: string[]) => void): void;
+    export function getUILanguage(): string;
 }
 
 ////////////////////
@@ -1257,6 +1289,68 @@ declare module chrome.management {
 }
 
 ////////////////////
+// Notifications
+// https://developer.chrome.com/extensions/notifications
+////////////////////
+declare module chrome.notifications {
+    interface ButtonOptions {
+        title: string;
+        iconUrl?: string;
+    }
+
+    interface ItemOptions {
+        title: string;
+        message: string;
+    }
+
+    interface NotificationOptions {
+        type?: string;
+        iconUrl?: string;
+        title?: string;
+        message?: string;
+        contextMessage?: string;
+        priority?: number;
+        eventTime?: number;
+        buttons?: Array<ButtonOptions>;
+        items?: Array<ItemOptions>;
+        progress?: number;
+        isClickable?: boolean;
+    }
+
+    interface OnClosed {
+        addListener(callback: (notificationId: string, byUser: boolean) => void): void;
+    }
+
+    interface OnClicked {
+        addListener(callback: (notificationId: string) => void): void;
+    }
+
+    interface OnButtonClicked {
+        addListener(callback: (notificationId: string, buttonIndex: number) => void): void;
+    }
+
+    interface OnPermissionLevelChanged {
+        addListener(callback: (level: string) => void): void;
+    }
+
+    interface OnShowSettings {
+        addListener(callback: Function): void;
+    }
+
+    export var onClosed: OnClosed;
+    export var onClicked: OnClicked;
+    export var onButtonClicked: OnButtonClicked;
+    export var onPermissionLevelChanged: OnPermissionLevelChanged;
+    export var onShowSettings: OnShowSettings;
+
+    export function create(notificationId: string, options: NotificationOptions, callback: (notificationId: string) => void): void;
+    export function update(notificationId: string, options: NotificationOptions, callback: (wasUpdated: boolean) => void): void;
+    export function clear(notificationId: string, callback: (wasCleared: boolean) => void): void;
+    export function getAll(callback: (notifications: any) => void): void;
+    export function getPermissionLevel(callback: (level: string) => void): void;
+}
+
+////////////////////
 // Omnibox
 ////////////////////
 declare module chrome.omnibox {
@@ -1341,7 +1435,7 @@ declare module chrome.pageCapture {
         tabId: number;
     }
 
-    export function saveAsMHTML(details: SaveDetails, callback: (mhtmlData?: any) => void): void;
+    export function saveAsMHTML(details: SaveDetails, callback: (mhtmlData: any) => void): void;
 }
 
 ////////////////////
@@ -1449,12 +1543,75 @@ declare module chrome.proxy {
 // Runtime
 ////////////////////
 declare module chrome.runtime {
-    var lastError: Object;
+    var lastError: LastError;
     var id: string;
+
+    interface LastError {
+        message?: string;
+    }
+
+    interface ConnectInfo {
+        name?: string;
+    }
 
     interface InstalledDetails {
         reason: string;
         previousVersion?: string;
+    }
+
+    interface MessageOptions {
+        includeTlsChannelId?: boolean;
+    }
+
+    interface MessageSender {
+        id?: string;
+        tab?: chrome.tabs.Tab;
+        frameId?: number;
+        url?: string;
+        tlsChannelId?: string;
+    }
+
+    interface PlatformInfo {
+        os: string;
+        arch: string;
+        nacl_arch: string;
+    }
+
+    interface Port {
+        postMessage: (message: Object) => void;
+        disconnect: () => void;
+        sender?: MessageSender;
+        onDisconnect: chrome.events.Event;
+        onMessage: PortMessageEvent;
+        name: string;
+    }
+
+    interface UpdateAvailableDetails {
+        version: string;
+    }
+
+    interface UpdateCheckDetails {
+        version: string;
+    }
+
+    interface PortMessageEvent extends chrome.events.Event {
+        addListener(callback: (message: Object, port: Port) => void): void;
+    }
+
+    interface ExtensionMessageEvent extends chrome.events.Event {
+        addListener(callback: (message: any, sender: MessageSender, sendResponse: Function) => void): void;
+    }
+
+    interface ExtensionMessageExternalEvent extends chrome.events.Event {
+        addListener(callback: (message: any, sender: MessageSender, sendResponse: Function) => void): void;
+    }
+
+    interface ExtensionConnectEvent extends chrome.events.Event {
+        addListener(callback: (port: Port) => void): void;
+    }
+
+    interface ExtensionConnectExternalEvent extends chrome.events.Event {
+        addListener(callback: (port: Port) => void): void;
     }
 
     interface RuntimeSuspendEvent extends chrome.events.Event {
@@ -1472,15 +1629,47 @@ declare module chrome.runtime {
     interface RuntimeSuspendCanceledEvent extends chrome.events.Event {
         addListener(callback: Function): void;
     }
-    
+    interface RuntimeMessageEvent extends chrome.events.Event {
+        addListener(callback: Function): void;
+    }
+
+    interface RuntimeRestartRequiredEvent extends chrome.events.Event {
+        addListener(callback: (reason: string) => void): void;
+    }
+
+    interface RuntimeUpdateAvailableEvent extends chrome.events.Event {
+        addListener(callback: (details: UpdateAvailableDetails) => void): void;
+    }
+
+    export function connect(connectInfo?: ConnectInfo): Port;
+    export function connect(extensionId: string, connectInfo?: ConnectInfo): Port;
+    export function connectNative(application: string): Port;
     export function getBackgroundPage(callback: (backgroundPage?: Window) => void): void;
     export function getManifest(): Object;
+    export function getPackageDirectoryEntry(callback: (directoryEntry: any) => void): void;
+    export function getPlatformInfo(callback: (platformInfo: PlatformInfo) => void): void;
     export function getURL(path: string): string;
-    
+    export function reload(): void;
+    export function requestUpdateCheck(callback: (status: string, details?: UpdateCheckDetails) => void): void;
+    export function restart(): void;
+    export function sendMessage(message: any, responseCallback?: (response: any) => void): void;
+    export function sendMessage(message: any, options: MessageOptions, responseCallback?: (response: any) => void): void;
+    export function sendMessage(extensionId: string, message: any, responseCallback?: (response: any) => void): void;
+    export function sendMessage(extensionId: string, message: any, options: MessageOptions, responseCallback?: (response: any) => void): void;
+    export function sendNativeMessage(application: string, message: any, responseCallback?: (response: any) => void): void;
+    export function setUninstallUrl(url: string): void;
+
+    var onConnect: ExtensionConnectEvent;
+    var onConnectExternal: ExtensionConnectExternalEvent;
     var onSuspend: RuntimeSuspendEvent;
     var onStartup: RuntimeStartupEvent;
     var onInstalled: RuntimeInstalledEvent;
     var onSuspendCanceled: RuntimeSuspendCanceledEvent;
+    var onMessage: ExtensionMessageEvent;
+    var onMessageExternal: ExtensionMessageExternalEvent;
+    var onRestartRequired: RuntimeRestartRequiredEvent;
+    var onUpdateAvailable: RuntimeUpdateAvailableEvent;
+
 }
 
 ////////////////////
@@ -1534,11 +1723,11 @@ declare module chrome.storage {
         oldValue?: any;
     }
 
-    interface Local {
+    interface Local extends StorageArea {
         QUOTA_BYTES: number;
     }
 
-    interface Sync {
+    interface Sync extends StorageArea {
         MAX_SUSTAINED_WRITE_OPERATIONS_PER_MINUTE: number;
         QUOTA_BYTES: number;
         QUOTA_BYTES_PER_ITEM: number;
@@ -1614,6 +1803,27 @@ declare module chrome.socket {
     export function setNoDelay(socketId: number, noDelay: boolean, callback?: (result: boolean) => void): void;
     export function getInfo(socketId: number, callback: (result: SocketInfo) => void): void;
     export function getNetworkList(callback: (result: NetworkInterface[]) => void): void;
+}
+
+////////////////////
+// TabCapture
+////////////////////
+declare module chrome.tabCapture {
+    interface CaptureInfo {
+        tabId: number;
+        status: string;
+        fullscreen: boolean;
+    }
+
+    interface CaptureOptions {
+        audio?: boolean;
+        video?: boolean;
+        audioConstraints?: MediaTrackConstraints;
+        videoConstraints?: MediaTrackConstraints;
+    }
+
+    export function capture(options: CaptureOptions, callback: (stream: LocalMediaStream) => void): void;
+    export function getCapturedTabs(callback: (result: CaptureInfo[]) => void): void;
 }
 
 ////////////////////
@@ -1702,6 +1912,7 @@ declare module chrome.tabs {
     }
 
     interface TabRemoveInfo {
+        windowId: number;
         isWindowClosing: boolean;
     }
 
@@ -1764,6 +1975,10 @@ declare module chrome.tabs {
         addListener(callback: (activeInfo: TabActiveInfo) => void): void;
     }
 
+    interface TabReplacedEvent extends chrome.events.Event {
+        addListener(callback: (addedTabId: number, removedTabId: number) => void): void;
+    }
+
     export function executeScript(details: InjectDetails, callback?: (result: any[]) => void): void;
     export function executeScript(tabId: number, details: InjectDetails, callback?: (result: any[]) => void): void;
     export function get(tabId: number, callback: (tab: Tab) => void): void;
@@ -1771,6 +1986,7 @@ declare module chrome.tabs {
     export function create(createProperties: CreateProperties, callback?: (tab: Tab) => void): void;
     export function move(tabId: number, moveProperties: MoveProperties, callback?: (tab: Tab) => void): void;
     export function move(tabIds: number[], moveProperties: MoveProperties, callback?: (tabs: Tab[]) => void): void;
+    export function update(updateProperties: UpdateProperties, callback?: (tab?: Tab) => void): void;
     export function update(tabId: number, updateProperties: UpdateProperties, callback?: (tab?: Tab) => void): void;
     export function remove(tabId: number, callback?: Function): void;
     export function remove(tabIds: number[], callback?: Function): void;
@@ -1781,7 +1997,7 @@ declare module chrome.tabs {
     export function reload(tabId?: number, reloadProperties?: ReloadProperties, func?: Function): void;
     export function duplicate(tabId: number, callback?: (tab?: Tab) => void): void;
     export function sendMessage(tabId: number, message: any, responseCallback?: (response: any) => void): void;
-    export function connect(tabId: number, connectInfo?: ConnectInfo): void;
+    export function connect(tabId: number, connectInfo?: ConnectInfo): runtime.Port;
     export function insertCSS(tabId: number, details: InjectDetails, callback?: Function): void;
     export function highlight(highlightInfo: HighlightInfo, callback: (window: chrome.windows.Window) => void): void;
     export function query(queryInfo: QueryInfo, callback: (result: Tab[]) => void): void;
@@ -1796,6 +2012,7 @@ declare module chrome.tabs {
     var onDetached: TabDetachedEvent;
     var onCreated: TabCreatedEvent;
     var onActivated: TabActivatedEvent;
+    var onReplaced: TabReplacedEvent;
 }
 
 ////////////////////
@@ -1877,14 +2094,19 @@ declare module chrome.ttsEngine {
 // Types
 ////////////////////
 declare module chrome.types {
-    interface ChromeSettingSetDetails {
+    interface ChromeSettingClearDetails {
         scope?: string;
+    }
+
+    interface ChromeSettingSetDetails extends ChromeSettingClearDetails {
         value: any;
     }
 
     interface ChromeSettingGetDetails {
         incognito?: boolean;
     }
+
+    type DetailsCallback = (details: ChromeSettingGetResultDetails) => void;
 
     interface ChromeSettingGetResultDetails {
         levelOfControl: string;
@@ -1893,7 +2115,7 @@ declare module chrome.types {
     }
 
     interface ChromeSettingChangedEvent extends chrome.events.Event {
-        addListener(callback: (details: ChromeSettingGetResultDetails) => void): void;
+        addListener(callback: DetailsCallback): void;
     }
 
     interface ChromeSetting {
@@ -1902,7 +2124,8 @@ declare module chrome.types {
             callback?: Function;
         };
         set(details: ChromeSettingSetDetails, callback?: Function): void;
-        get(details: ChromeSettingGetDetails, callback?: ChromeSettingGetResultDetails): void;
+        get(details: ChromeSettingGetDetails, callback?: DetailsCallback): void;
+        clear(details: ChromeSettingClearDetails, callback?: Function): void;
         onChange: ChromeSettingChangedEvent;
     }
 }
@@ -1920,104 +2143,86 @@ declare module chrome.webNavigation {
     interface GetFrameResultDetails {
         url: string;
         errorOccurred: boolean;
+        parentFrameId: number;
     }
 
     interface GetAllFrameDetails {
         tabId: number;
     }
 
-    interface ReferenceFragmentUpdatedDetails {
+    interface GetAllFrameResultDetails extends GetFrameResultDetails {
         processId: number;
-        tabId: number;
-        transitionType: string;
-        url: string;
-        timeStamp: number;
-        frameId: number;
-        transitionQualifiers: string;
-    }
-
-    interface CompletedDetails {
-        processId: number;
-        tabId: number;
-        url: string;
-        timeStamp: number;
         frameId: number;
     }
 
-    interface HistoryStateUpdatedDetails {
-        processId: number;
+    interface CallbackBasicDetails {
         tabId: number;
-        transitionType: string;
-        url: string;
         timeStamp: number;
+    }
+
+    interface CallbackDetails extends CallbackBasicDetails {
+        processId: number;
+        url: string;
         frameId: number;
+    }
+
+    interface CallbackTransitionDetails extends CallbackDetails {
+        transitionType: string;
         transitionQualifiers: string[];
     }
 
-    interface CreatedNavigationTargetDetails {
-        tabId: number;
+    interface ReferenceFragmentUpdatedDetails extends CallbackTransitionDetails {
+    }
+
+    interface CompletedDetails extends CallbackDetails {
+    }
+
+    interface HistoryStateUpdatedDetails extends CallbackTransitionDetails {
+    }
+
+    interface CreatedNavigationTargetDetails extends CallbackBasicDetails {
         url: string;
-        timeStamp: number;
         sourceTabId: number;
         sourceProcessId: number;
         sourceFrameId: number;
     }
 
-    interface TabReplacedDetails {
-        tabId: number;
+    interface TabReplacedDetails extends CallbackBasicDetails {
         replacedTabId: number;
-        timeStamp: number;
     }
 
-    interface BeforeNavigateDetails {
-        processId: number;
-        tabId: number;
-        url: string;
-        timeStamp: number;
-        frameId: number;
+    interface BeforeNavigateDetails extends CallbackDetails {
+        parentFrameId: number;
     }
 
-    interface CommittedDetails {
-        processId: number;
-        tabId: number;
-        transitionType: string;
-        url: string;
-        timeStamp: number;
-        frameId: number;
-        transitionQualifiers: string[];
+    interface CommittedDetails extends CallbackTransitionDetails {
     }
 
-    interface DomContentLoadedDetails {
-        processId: number;
-        tabId: number;
-        url: string;
-        timeStamp: number;
-        frameId: number;
+    interface DomContentLoadedDetails extends CallbackDetails {
     }
 
-    interface ErrorOccurredDetails {
-        processId: number;
-        tabId: number;
-        url: string;
-        timeStamp: number;
-        frameId: number;
+    interface ErrorOccurredDetails extends CallbackDetails {
         error: string;
     }
 
+    interface WebNavigationEventFilters {
+        url: chrome.events.UrlFilter[];
+    }
+
     interface WebNavigationReferenceFragmentUpdatedEvent extends chrome.events.Event {
-        addListener(callback: (details: ReferenceFragmentUpdatedDetails) => void): void;
+        addListener(callback: (details: ReferenceFragmentUpdatedDetails) => void, filters?: WebNavigationEventFilters): void;
     }
 
     interface WebNavigationCompletedEvent extends chrome.events.Event {
-        addListener(callback: (details: CompletedDetails) => void): void;
+        addListener(callback: (details: CompletedDetails) => void, filters?: WebNavigationEventFilters): void;
     }
 
     interface WebNavigationHistoryStateUpdatedEvent extends chrome.events.Event {
-        addListener(callback: (details: HistoryStateUpdatedDetails) => void): void;
+        addListener(callback: (details: HistoryStateUpdatedDetails) => void, filters?: WebNavigationEventFilters): void;
     }
 
     interface WebNavigationCreatedNavigationTargetEvent extends chrome.events.Event {
-        addListener(callback: (details: CreatedNavigationTargetDetails) => void): void;
+        addListener(callback: (details: CreatedNavigationTargetDetails) => void, filters?: WebNavigationEventFilters): void;
     }
 
     interface WebNavigationTabReplacedEvent extends chrome.events.Event {
@@ -2025,24 +2230,24 @@ declare module chrome.webNavigation {
     }
 
     interface WebNavigationBeforeNavigateEvent extends chrome.events.Event {
-        addListener(callback: (details: BeforeNavigateDetails) => void): void;
+        addListener(callback: (details: BeforeNavigateDetails) => void, filters?: WebNavigationEventFilters): void;
     }
 
     interface WebNavigationCommittedEvent extends chrome.events.Event {
-        addListener(callback: (details: CommittedDetails) => void): void;
+        addListener(callback: (details: CommittedDetails) => void, filters?: WebNavigationEventFilters): void;
     }
 
     interface WebNavigationDomContentLoadedEvent extends chrome.events.Event {
-        addListener(callback: (details: DomContentLoadedDetails) => void): void;
+        addListener(callback: (details: DomContentLoadedDetails) => void, filters?: WebNavigationEventFilters): void;
     }
 
     interface WebNavigationErrorOccurredEvent extends chrome.events.Event {
-        addListener(callback: (details: ErrorOccurredDetails) => void): void;
+        addListener(callback: (details: ErrorOccurredDetails) => void, filters?: WebNavigationEventFilters): void;
     }
 
     export function getFrame(details: GetFrameDetails, callback: (details?: GetFrameResultDetails) => void): void;
-    export function getAllFrames(details: GetAllFrameDetails, callback: (details?: Object[]) => void): void;
-    
+    export function getAllFrames(details: GetAllFrameDetails, callback: (details?: GetAllFrameResultDetails[]) => void): void;
+
     var onReferenceFragmentUpdated: WebNavigationReferenceFragmentUpdatedEvent;
     var onCompleted: WebNavigationCompletedEvent;
     var onHistoryStateUpdated: WebNavigationHistoryStateUpdatedEvent;
@@ -2063,69 +2268,62 @@ declare module chrome.webRequest {
         password: string;
     }
 
+    interface HttpHeader {
+        name: string;
+        value?: string;
+        binaryValue?: ArrayBuffer;
+    }
+
     interface BlockingResponse {
         cancel?: boolean;
         redirectUrl?: string;
-        responseHeaders?: Object;
+        responseHeaders?: HttpHeader[];
         authCredentials?: AuthCredentials;
-        requestHeaders?: Object;
+        requestHeaders?: HttpHeader[];
     }
 
     interface RequestFilter {
         tabId?: number;
-        types?: string;
+        types?: string[];
         urls: string[];
         windowId?: number;
     }
 
     interface UploadData {
-        bytes?: any[];
+        bytes?: ArrayBuffer;
         file?: string;
     }
 
-    interface OnCompletedDetails {
-        tabId: number;
-        ip?: string;
-        statusLine?: string;
-        frameId: number;
-        responseHeaders?: Object;
-        parentFrameId: number;
-        fromCache: boolean;
-        url: string;
-        timeStamp: number;
+    interface CallbackDetails {
         requestId: string;
-        type: string;
+        url: string;
         method: string;
+        tabId: number;
+        frameId: number;
+        parentFrameId: number;
+        timeStamp: number;
+        type: string;
+    }
+
+    interface OnCompletedDetails extends CallbackDetails {
+        ip?: string;
+        statusLine: string;
+        responseHeaders?: HttpHeader[];
+        fromCache: boolean;
         statusCode: number;
     }
 
-    interface OnHeadersReceivedDetails {
-        tabId: number;
-        parentFrameId: number;
-        url: string;
-        timeStamp: number;
-        statusLine?: string;
-        frameId: number;
-        requestId: string;
-        responseHeaders: Object;
-        type: string;
-        method: string;
+    interface OnHeadersReceivedDetails extends CallbackDetails {
+        statusLine: string;
+        responseHeaders?: HttpHeader[];
     }
 
-    interface OnBeforeRedirectDetails {
-        tabId: number;
+    interface OnBeforeRedirectDetails extends CallbackDetails {
         ip?: string;
-        statusLine?: string;
-        frameId: number;
-        responseHeaders?: Object;
-        parentFrameId: number;
+        statusLine: string;
+        responseHeaders?: HttpHeader[];
         fromCache: boolean;
-        url: string;
-        timeStamp: number;
-        requestId: string;
         redirectUrl: string;
-        type: string;
-        method: string;
         statusCode: number;
     }
 
@@ -2134,132 +2332,100 @@ declare module chrome.webRequest {
         port: number;
     }
 
-    interface OnAuthRequiredDetails {
-        tabId: number;
-        statusLine?: string;
-        frameId: number;
+    interface OnAuthRequiredDetails extends CallbackDetails {
+        statusLine: string;
         challenger: Challenger;
-        responseHeaders: Object;
+        responseHeaders?: HttpHeader[];
         isProxy: boolean;
         realm?: string;
-        parentFrameId: number;
-        url: string;
-        timeStamp: number;
-        requestId: string;
         scheme: string;
-        type: string;
-        method: string;
     }
 
-    interface OnBeforeSendHeadersDetails {
-        tabId: number;
-        parentFrameId: number;
-        url: string;
-        timeStamp: number;
-        frameId: number;
-        requestId: number;
-        requestHeaders?: Object;
-        type: string;
-        method: string;
+    interface OnBeforeSendHeadersDetails extends CallbackDetails {
+        requestHeaders?: HttpHeader[];
     }
 
-    interface OnErrorOccurredDetails {
-        tabId: number;
+    interface OnErrorOccurredDetails extends CallbackDetails {
         ip?: string;
-        frameId: number;
-        parentFrameId: number;
         fromCache: boolean;
-        url: string;
-        timeStamp: number;
-        requestId: string;
         error: string;
-        type: string;
-        method: string;
     }
 
-    interface OnResponseStartedDetails {
-        tabId: number;
+    interface OnResponseStartedDetails extends CallbackDetails {
         ip?: string;
-        statusLine?: string;
-        frameId: number;
-        responseHeaders?: Object;
-        parentFrameId: number;
+        statusLine: string;
+        responseHeaders?: HttpHeader[];
         fromCache: boolean;
-        url: string;
-        timeStamp: number;
-        requestId: string;
-        type: string;
-        method: string;
         statusCode: number;
     }
 
-    interface OnSendHeadersDetails {
-        tabId: number;
-        parentFrameId: number;
-        url: string;
-        timeStamp: number;
-        frameId: number;
-        requestId: string;
-        requestHeaders: Object;
-        type: string;
-        method: string;
+    interface OnSendHeadersDetails extends CallbackDetails {
+        requestHeaders?: HttpHeader[];
+    }
+
+    interface FormData {
+        [key: string]: string[];
     }
 
     interface RequestBody {
-        raw?: UploadData;
+        raw?: UploadData[];
         error?: string;
-        formData?: Object;
+        formData?: FormData;
     }
 
-    interface OnBeforeRequestDetails {
-        tabId: number;
-        parentFrameId: number;
-        url: string;
-        timeStamp: number;
-        frameId: number;
-        requestBody: RequestBody;
+    interface OnBeforeRequestDetails extends CallbackDetails {
+        requestBody?: RequestBody;
     }
 
-    interface WebRequestCompletedEvent extends chrome.events.Event { 
-        addListener(callback: (details: OnCompletedDetails) => void): void;
+    interface WebRequestCompletedEvent extends chrome.events.Event {
+        addListener(callback: (details: OnCompletedDetails) => BlockingResponse, filter?: RequestFilter, opt_extraInfoSpec?: string[]): void;
+        removeListener(callback: (details: OnCompletedDetails) => BlockingResponse): void;
     }
 
-    interface WebRequestHeadersReceivedEvent extends chrome.events.Event { 
-        addListener(callback: (details: OnHeadersReceivedDetails) => void): void;
+    interface WebRequestHeadersReceivedEvent extends chrome.events.Event {
+        addListener(callback: (details: OnHeadersReceivedDetails) => BlockingResponse, filter?: RequestFilter, opt_extraInfoSpec?: string[]): void;
+        removeListener(callback: (details: OnHeadersReceivedDetails) => BlockingResponse): void;
     }
 
-    interface WebRequestBeforeRedirectEvent extends chrome.events.Event { 
-        addListener(callback: (details: OnBeforeRedirectDetails) => void): void;
+    interface WebRequestBeforeRedirectEvent extends chrome.events.Event {
+        addListener(callback: (details: OnBeforeRedirectDetails) => BlockingResponse, filter?: RequestFilter, opt_extraInfoSpec?: string[]): void;
+        removeListener(callback: (details: OnBeforeRedirectDetails) => BlockingResponse): void;
     }
 
-    interface WebRequestAuthRequiredEvent extends chrome.events.Event { 
-        addListener(callback: (details: OnAuthRequiredDetails, callback?: (response: BlockingResponse) => void) => void): void;
+    interface WebRequestAuthRequiredEvent extends chrome.events.Event {
+        addListener(callback: (details: OnAuthRequiredDetails, callback?: (response: BlockingResponse) => void) => void, filter?: RequestFilter, opt_extraInfoSpec?: string[]): void;
+        removeListener(callback: (details: OnAuthRequiredDetails, callback?: (response: BlockingResponse) => void) => void): void;
     }
 
-    interface WebRequestBeforeSendHeadersEvent extends chrome.events.Event { 
-        addListener(callback: (details: OnBeforeSendHeadersDetails) => void): void;
+    interface WebRequestBeforeSendHeadersEvent extends chrome.events.Event {
+        addListener(callback: (details: OnBeforeSendHeadersDetails) => BlockingResponse, filter?: RequestFilter, opt_extraInfoSpec?: string[]): void;
+        removeListener(callback: (details: OnBeforeSendHeadersDetails) => BlockingResponse): void;
     }
 
-    interface WebRequestErrorOccurredEvent extends chrome.events.Event { 
-        addListener(callback: (details: OnErrorOccurredDetails) => void): void;
+    interface WebRequestErrorOccurredEvent extends chrome.events.Event {
+        addListener(callback: (details: OnErrorOccurredDetails) => BlockingResponse, filter?: RequestFilter, opt_extraInfoSpec?: string[]): void;
+        removeListener(callback: (details: OnErrorOccurredDetails) => BlockingResponse): void;
     }
 
-    interface WebRequestResponseStartedEvent extends chrome.events.Event { 
-        addListener(callback: (details: OnResponseStartedDetails) => void): void;
+    interface WebRequestResponseStartedEvent extends chrome.events.Event {
+        addListener(callback: (details: OnResponseStartedDetails) => BlockingResponse, filter?: RequestFilter, opt_extraInfoSpec?: string[]): void;
+        removeListener(callback: (details: OnResponseStartedDetails) => BlockingResponse): void;
     }
 
-    interface WebRequestSendHeadersEvent extends chrome.events.Event { 
-        addListener(callback: (details: OnSendHeadersDetails) => void): void;
+    interface WebRequestSendHeadersEvent extends chrome.events.Event {
+        addListener(callback: (details: OnSendHeadersDetails) => BlockingResponse, filter?: RequestFilter, opt_extraInfoSpec?: string[]): void;
+        removeListener(callback: (details: OnSendHeadersDetails) => BlockingResponse): void;
     }
 
-    interface WebRequestBeforeRequestEvent extends chrome.events.Event { 
-        addListener(callback: (details: OnBeforeRequestDetails) => void): void;
+    interface WebRequestBeforeRequestEvent extends chrome.events.Event {
+        addListener(callback: (details: OnBeforeRequestDetails) => BlockingResponse, filter?: RequestFilter, opt_extraInfoSpec?: string[]): void;
+        removeListener(callback: (details: OnBeforeRequestDetails) => BlockingResponse): void;
     }
 
     var MAX_HANDLER_BEHAVIOR_CHANGED_CALLS_PER_10_MINUTES: number;
 
     export function handlerBehaviorChanged(callback?: Function): void;
-    
+
     var onCompleted: WebRequestCompletedEvent;
     var onHeadersReceived: WebRequestHeadersReceivedEvent;
     var onBeforeRedirect: WebRequestBeforeRedirectEvent;

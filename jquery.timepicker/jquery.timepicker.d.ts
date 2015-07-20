@@ -1,6 +1,6 @@
 // Type definitions for jQuery UI Timepicker 0.3
 // Project: http://fgelinas.com/code/timepicker/
-// Definitions by: https://github.com/anwarjaved
+// Definitions by: Anwar Javed <https://github.com/anwarjaved>
 // Definitions: https://github.com/borisyankov/DefinitelyTyped
 
 /// <reference path="../jquery/jquery.d.ts"/>
@@ -64,7 +64,11 @@ interface TimePickerOptions {
 interface JQuery {
     timepicker(): JQuery;
     timepicker(options: TimePickerOptions): JQuery;
-    timepicker(methodName: string): JQuery;
+    timepicker(methodName: string): any;
+    timepicker(methodName: 'getTime'): string;
+    timepicker(methodName: 'getTimeAsDate'): Date;
+    timepicker(methodName: 'getHour'): number;
+    timepicker(methodName: 'getMinute'): number;
     timepicker(methodName: string, methodParameter: any): any;
     timepicker(optionLiteral: string, optionName: string): any;
 }

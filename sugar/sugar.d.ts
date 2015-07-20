@@ -1,4 +1,8 @@
-﻿/* 
+﻿// Type definitions for Sugar 1.3.9
+// Project: http://sugarjs.com/
+// Definitions by: Josh Baldwin <https://github.com/jbaldwin/>
+// Definitions: https://github.com/borisyankov/DefinitelyTyped
+/*
 sugar-1.3.9.d.ts may be freely distributed under the MIT license.
 
 Copyright (c) 2013 Josh Baldwin https://github.com/jbaldwin/sugar.d.ts
@@ -77,7 +81,7 @@ interface String {
 	*   'jumpy'.at(-1)              -> 'y'
 	*   'lucky charms'.at(2,4,6,8) -> ['u','k','y',c']
 	***/
-	at(index: number, loop?: bool): string;
+	at(index: number, loop?: boolean): string;
 
 	/**
 	* @see at
@@ -96,7 +100,7 @@ interface String {
 	*   'moz-border-radius'.camelize()      -> 'MozBorderRadius'
 	*   'moz-border-radius'.camelize(false) -> 'mozBorderRadius'
 	**/
-	camelize(first?: bool): string;
+	camelize(first?: boolean): string;
 
 	/**
 	* Capitalizes the first character in the string.
@@ -111,7 +115,7 @@ interface String {
 	*   'hello kitty'.capitalize(true) -> 'Hello Kitty'
 	*
 	**/
-	capitalize(all: bool): string;
+	capitalize(all?: boolean): string;
 
 	/**
 	* Runs callback [fn] against each character in the string.
@@ -220,22 +224,22 @@ interface String {
 	*   'jumpy'.endsWith('MPY')        -> false
 	*   'jumpy'.endsWith('MPY', false) -> true
 	**/
-	endsWith(find: string, pos?: number, case_?: bool): bool;
+	endsWith(find: string, pos?: number, case_?: boolean): boolean;
 
 	/**
 	* @see endsWith
 	**/
-	endsWith(find: string, case_?: bool): bool;
+	endsWith(find: string, case_?: boolean): boolean;
 
 	/**
 	* @see endsWith
 	**/
-	endsWith(find: RegExp, pos?: number, case_?: bool): bool;
+	endsWith(find: RegExp, pos?: number, case_?: boolean): boolean;
 
 	/**
 	* @see endsWith
 	**/
-	endsWith(find: RegExp, case_?: bool): bool;
+	endsWith(find: RegExp, case_?: boolean): boolean;
 
 	/**
 	* Converts HTML characters to their entity equivalents.
@@ -265,7 +269,7 @@ interface String {
 	*   'http://foo.com/"bar"'.escapeURL()     -> 'http://foo.com/%22bar%22'
 	*   'http://foo.com/"bar"'.escapeURL(true) -> 'http%3A%2F%2Ffoo.com%2F%22bar%22'
 	**/
-	escapeURL(param?: bool): string;
+	escapeURL(param?: boolean): string;
 
 	/**
 	* Returns the first [n] characters of the string.
@@ -321,12 +325,12 @@ interface String {
 	*   'broken'.has(/[a-n]/) -> true
 	*   'broken'.has(/[s-z]/) -> false
 	**/
-	has(find: string): bool;
+	has(find: string): boolean;
 
 	/**
 	* @see has
 	**/
-	has(find: RegExp): bool;
+	has(find: RegExp): boolean;
 
 	/**
 	* Returns true if the string contains any characters in Arabic.
@@ -338,79 +342,79 @@ interface String {
 	*   '??????'.hasKatakana() -> true
 	*   "l'année".hasLatin()         -> true
 	**/
-	hasArabic(): bool;
+	hasArabic(): boolean;
 
 	/**
 	* Returns true if the string contains any characters in Cyrillic.
 	* @returns True if the string contains Cyrillic.
 	**/
-	hasCyrillic(): bool;
+	hasCyrillic(): boolean;
 
 	/**
 	* Returns true if the string contains any characters in Greek.
 	* @returns True if the string contains Greek.
 	**/
-	hasGreek(): bool;
+	hasGreek(): boolean;
 
 	/**
 	* Returns true if the string contains any characters in Hangul.
 	* @returns True if the string contains Hangul.
 	**/
-	hasHangul(): bool;
+	hasHangul(): boolean;
 
 	/**
 	* Returns true if the string contains any characters in Han.
 	* @returns True if the string contains Han.
 	**/
-	hasHan(): bool;
+	hasHan(): boolean;
 
 	/**
 	* Returns true if the string contains any characters in Kanji.
 	* @returns True if the string contains Kanji.
 	**/
-	hasKanji(): bool;
+	hasKanji(): boolean;
 
 	/**
 	* Returns true if the string contains any characters in Hebrew.
 	* @returns True if the string contains Hebrew.
 	**/
-	hasHebrew(): bool;
+	hasHebrew(): boolean;
 
 	/**
 	* Returns true if the string contains any characters in Hiragana.
 	* @returns True if the string contains Hiragana.
 	**/
-	hasHiragana(): bool;
+	hasHiragana(): boolean;
 
 	/**
 	* Returns true if the string contains any characters in Kana.
 	* @returns True if the string contains Kana.
 	**/
-	hasKana(): bool;
+	hasKana(): boolean;
 
 	/**
 	* Returns true if the string contains any characters in Katakana.
 	* @returns True if the string contains Katakana.
 	**/
-	hasKatakana(): bool;
+	hasKatakana(): boolean;
 
 	/**
 	* Returns true if the string contains any characters in Latin.
 	* @returns True if the string contains Latin.
 	**/
-	hasLatin(): bool;
+	hasLatin(): boolean;
 
 	/**
 	* Returns true if the string contains any characters in Thai.
 	* @returns True if the string contains Thai.
 	**/
-	hasThai(): bool;
+	hasThai(): boolean;
 
 	/**
 	* Returns true if the string contains any characters in Devanagari.
 	* @returns True if the string contains Devanagari.
 	**/
-	hasDevanagari(): bool;
+	hasDevanagari(): boolean;
 
 	/**
 	* Converts katakana into hiragana.
@@ -422,7 +426,7 @@ interface String {
 	*   '????'.hiragana()       -> '????'
 	*   '????'.hiragana(false)  -> '????'
 	**/
-	hiragana(all?: bool): string;
+	hiragana(all?: boolean): string;
 
 	/**
 	* Creates a human readable string.
@@ -443,7 +447,7 @@ interface String {
 	*   '   '.isBlank()   -> true
 	*   'noway'.isBlank() -> false
 	**/
-	isBlank(): bool;
+	isBlank(): boolean;
 
 	/**
 	* Returns true if the string contains only characters in Arabic. Whitespace is ignored.
@@ -455,79 +459,79 @@ interface String {
 	*   '??????'.isKatakana() -> false
 	*   "l'année".isLatin()         -> true
 	**/
-	isArabic(): bool;
+	isArabic(): boolean;
 
 	/**
 	* Returns true if the string contains only characters in Cyrillic. Whitespace is ignored.
 	* @returns True if the string containsly only characters in Cyrillic.
 	**/
-	isCyrillic(): bool;
+	isCyrillic(): boolean;
 
 	/**
 	* Returns true if the string contains only characters in Greek. Whitespace is ignored.
 	* @returns True if the string containsly only characters in Greek.
 	**/
-	isGreek(): bool;
+	isGreek(): boolean;
 
 	/**
 	* Returns true if the string contains only characters in Hangul. Whitespace is ignored.
 	* @returns True if the string containsly only characters in Hangul.
 	**/
-	isHangul(): bool;
+	isHangul(): boolean;
 
 	/**
 	* Returns true if the string contains only characters in Han. Whitespace is ignored.
 	* @returns True if the string containsly only characters in Han.
 	**/
-	isHan(): bool;
+	isHan(): boolean;
 
 	/**
 	* Returns true if the string contains only characters in Kanji. Whitespace is ignored.
 	* @returns True if the string containsly only characters in Kanji.
 	**/
-	isKanji(): bool;
+	isKanji(): boolean;
 
 	/**
 	* Returns true if the string contains only characters in Hebrew. Whitespace is ignored.
 	* @returns True if the string containsly only characters in Hebrew.
 	**/
-	isHebrew(): bool;
+	isHebrew(): boolean;
 
 	/**
 	* Returns true if the string contains only characters in Hiragana. Whitespace is ignored.
 	* @returns True if the string containsly only characters in Hiragana.
 	**/
-	isHiragana(): bool;
+	isHiragana(): boolean;
 
 	/**
 	* Returns true if the string contains only characters in Kana. Whitespace is ignored.
 	* @returns True if the string containsly only characters in Kana.
 	**/
-	isKana(): bool;
+	isKana(): boolean;
 
 	/**
 	* Returns true if the string contains only characters in Katakana. Whitespace is ignored.
 	* @returns True if the string containsly only characters in Katakana.
 	**/
-	isKatakana(): bool;
+	isKatakana(): boolean;
 
 	/**
 	* Returns true if the string contains only characters in Latin. Whitespace is ignored.
 	* @returns True if the string containsly only characters in Latin.
 	**/
-	isLatin(): bool;
+	isLatin(): boolean;
 
 	/**
 	* Returns true if the string contains only characters in Thai. Whitespace is ignored.
 	* @returns True if the string containsly only characters in Thai.
 	**/
-	isThai(): bool;
+	isThai(): boolean;
 
 	/**
 	* Returns true if the string contains only characters in Devanagari. Whitespace is ignored.
 	* @returns True if the string containsly only characters in Devanagari.
 	**/
-	isDevanagari(): bool;
+	isDevanagari(): boolean;
 
 	/**
 	* Converts hiragana into katakana.
@@ -723,22 +727,22 @@ interface String {
 	*   'hello'.startsWith('HELL')        -> false
 	*   'hello'.startsWith('HELL', false) -> true
 	**/
-	startsWith(find: string, pos?: number, case_?: bool): bool;
+	startsWith(find: string, pos?: number, case_?: boolean): boolean;
 
 	/**
 	* @see startsWith
 	**/
-	startsWith(find: string, case_?: bool): bool;
+	startsWith(find: string, case_?: boolean): boolean;
 
 	/**
 	* @see startsWith
 	**/
-	startsWith(find: RegExp, pos?: number, case_?: bool): bool;
+	startsWith(find: RegExp, pos?: number, case_?: boolean): boolean;
 
 	/**
 	* @see startsWith
 	**/
-	startsWith(find: RegExp, case_?: bool): bool;
+	startsWith(find: RegExp, case_?: boolean): boolean;
 
 	/**
 	* Strips all HTML tags from the string.
@@ -834,7 +838,7 @@ interface String {
 	*   'just sittin on the dock of the bay'.truncate(20, true, 'middle') -> 'just sitt...of the bay'
 	*   'just sittin on the dock of the bay'.truncate(20, true, 'left')   -> '...the dock of the bay'
 	**/
-	truncate(length: number, split?: bool, from?: string, ellipsis?: string): string;
+	truncate(length: number, split?: boolean, from?: string, ellipsis?: string): string;
 
 	/**
 	* Converts hyphens and camel casing to underscores.
@@ -864,7 +868,7 @@ interface String {
 	*   'http%3A%2F%2Ffoo.com%2Fthe%20bar'.unescapeURL()     -> 'http://foo.com/the bar'
 	*   'http%3A%2F%2Ffoo.com%2Fthe%20bar'.unescapeURL(true) -> 'http%3A%2F%2Ffoo.com%2Fthe bar'
 	**/
-	unescapeURL(partial?: bool): string;
+	unescapeURL(partial?: boolean): string;
 
 	/**
 	* Runs callback [fn] against each word in the string.
@@ -954,7 +958,7 @@ interface Number {
 	* @see bytes
 	* @limit If false upper limit for units is 'exa'.
 	**/
-	bytes(precision?: number, limit?: bool): string;
+	bytes(precision?: number, limit?: boolean): string;
 
 	/**
 	* Shortcut for %Math.ceil% that also allows a <precision>.
@@ -1061,7 +1065,7 @@ interface Number {
 	*   (6).isEven()  -> true
 	*   (17).isEven() -> false
 	**/
-	isEven(): bool;
+	isEven(): boolean;
 
 	/**
 	* Returns true if the number has no trailing decimal.
@@ -1070,7 +1074,7 @@ interface Number {
 	*   (420).isInteger() -> true
 	*   (4.5).isInteger() -> false
 	**/
-	isInteger(): bool;
+	isInteger(): boolean;
 
 	/**
 	* Returns true if the number is a multiple of <num>.
@@ -1082,7 +1086,7 @@ interface Number {
 	*   (32).isMultipleOf(4) -> true
 	*   (34).isMultipleOf(4) -> false
 	**/
-	isMultipleOf(num: number): bool;
+	isMultipleOf(num: number): boolean;
 
 	/**
 	* Returns true if the number is odd.
@@ -1091,7 +1095,7 @@ interface Number {
 	*   (3).isOdd()  -> true
 	*   (18).isOdd() -> false
 	**/
-	isOdd(): bool;
+	isOdd(): boolean;
 
 	/**
 	* Returns the logarithm of the number with base <base>,
@@ -1186,7 +1190,7 @@ interface Number {
 	* @see metric
 	* @limit If false the upper limit for the metric units will be 'exa'.
 	**/
-	metric(precision?: number, limit?: bool): string;
+	metric(precision?: number, limit?: boolean): string;
 
 	/**
 	* Returns an ordinalized (English) string, i.e. "1st", "2nd", etc.
@@ -1211,7 +1215,7 @@ interface Number {
 	*   (-5).pad(4)       -> '-0005'
 	*   (82).pad(3, true) -> '+082'
 	**/
-	pad(place?: number, sign?: bool, base?: number): string;
+	pad(place?: number, sign?: boolean, base?: number): string;
 
 	/**
 	* Shortcut for %Math.round% that also allows a [precision].
@@ -1992,7 +1996,7 @@ interface ArrayStatic {
 	*   Array.isArray('wasabi') -> false
 	*   Array.isArray([1,2,3])  -> true
 	**/
-	isArray(obj: any): bool;
+	isArray(obj: any): boolean;
 }
 
 interface Array<T> {
@@ -2046,7 +2050,7 @@ interface Array<T> {
 	*   [1,2,3].at(-1)       -> 3
 	*   [1,2,3].at(0,1)      -> [1,2]
 	**/
-	at(index: number, loop?: bool): T;
+	at(index: number, loop?: boolean): T;
 
 	/**
 	* @see at
@@ -2089,7 +2093,7 @@ interface Array<T> {
 	*   [1,'',2,false,3].compact()       -> [1,'',2,false,3]
 	*   [1,'',2,false,3].compact(true)   -> [1,2,3]
 	**/
-	compact(all?: bool): T[];
+	compact(all?: boolean): T[];
 
 	/**
 	* Counts all elements in the array that match <f>.
@@ -2129,9 +2133,9 @@ interface Array<T> {
 	*   }, 2, true);
 	**/
 	each(
-		fn: (element: T, index: number, array: T[]) => bool,
+		fn: (element: T, index?: number, array?: T[]) => any,
 		index?: number,
-		loop?: bool): T[];
+		loop?: boolean): T[];
 
 	/**
 	* Returns true if all elements in the array match <f>.
@@ -2148,23 +2152,23 @@ interface Array<T> {
 	*   ['a','a','a'].every('a')   -> true
 	*   [{a:2},{a:2}].every({a:2}) -> true
 	**/
-	every(f: T, scope?: any): bool;
+	every(f: T, scope?: any): boolean;
 
 	/**
 	* @see every
 	* @note Already defined in lib.d.ts.
 	**/
-	//every(f: (element: T, index: number, array: T[]) => bool, scope?: any): bool;
+	//every(f: (element: T, index: number, array: T[]) => boolean, scope?: any): boolean;
 
 	/**
 	* @see every
 	**/
-	all(f: T, scope?: any): bool;
+	all(f: T, scope?: any): boolean;
 
 	/**
 	* @see every
 	**/
-	all(f: (element: T, index: number, array: T[]) => bool, scope?: any): bool;
+	all(f: (element: T, index: number, array: T[]) => boolean, scope?: any): boolean;
 
 	/**
 	* Removes any element in the array that matches [f1], [f2], etc.
@@ -2183,7 +2187,7 @@ interface Array<T> {
 	/**
 	* @see exclude
 	**/
-	exclude(f: (element: T, index: number, array: T[]) => bool): T[];
+	exclude(f: (element: T, index: number, array: T[]) => boolean): T[];
 
 	/**
 	* Returns any elements in the array that match <f>.
@@ -2205,7 +2209,7 @@ interface Array<T> {
 	* @see filter
 	* @note Already defined in lib.d.ts.
 	**/
-	//filter(f: (element: T, index: number, array: T[]) => bool, scope?: any): T[];
+	//filter(f: (element: T, index: number, array: T[]) => boolean, scope?: any): T[];
 
 	/**
 	* Returns the first element that matches <f>.
@@ -2223,12 +2227,12 @@ interface Array<T> {
 	*   });                                     -> {a:1,b:3}
 	*   ['cuba','japan','canada'].find(/^c/, 2) -> 'canada'
 	**/
-	find(f: T, index?: number, loop?: bool): T;
+	find(f: T, index?: number, loop?: boolean): T;
 
 	/**
 	* @see find
 	**/
-	find(f: (element: T, index: number, array: T[]) => bool, index?: number, loop?: bool): T;
+	find(f: (element: T, index: number, array: T[]) => boolean, index?: number, loop?: boolean): T;
 
 	/**
 	* Returns all elements that match <f>.
@@ -2247,12 +2251,12 @@ interface Array<T> {
 	*   ['cuba','japan','canada'].findAll(/^c/)    -> 'cuba','canada'
 	*   ['cuba','japan','canada'].findAll(/^c/, 2) -> 'canada'
 	**/
-	findAll(f: T, index?: number, loop?: bool): T[];
+	findAll(f: T, index?: number, loop?: boolean): T[];
 
 	/**
 	* @see findAll
 	**/
-	findAll(f: (element: T, index: number, array: T[]) => bool, index?: number, loop?: bool): T[];
+	findAll(f: (element: T, index: number, array: T[]) => boolean, index?: number, loop?: boolean): T[];
 
 	/**
 	* Returns the index of the first element that matches <f>
@@ -2278,12 +2282,12 @@ interface Array<T> {
 	*   }); -> 1
 	*   ['one','two','three'].findIndex(/th/); -> 2
 	**/
-	findIndex(f: T, startIndex?: number, loop?: bool): number;
+	findIndex(f: T, startIndex?: number, loop?: boolean): number;
 
 	/**
 	* @see findIndex
 	**/
-	findIndex(f: (element: T, index: number, array: T[]) => bool, startIndex?: number, loop?: bool): number;
+	findIndex(f: (element: T, index: number, array: T[]) => boolean, startIndex?: number, loop?: boolean): number;
 
 	/**
 	* Returns the first element(s) in the array.
@@ -2354,16 +2358,14 @@ interface Array<T> {
 	*   [{age:35,name:'ken'},{age:15,name:'bob'}].groupBy(function(n) {
 	*     return n.age;
 	*   });                                  -> { 35: [{age:35,name:'ken'}], 15: [{age:15,name:'bob'}] }
-	* todo: return should be : { [key: U]: any }
 	**/
-	groupBy<U>(map: string, fn?: (group: T) => void ): { [key: string]: any };
+	groupBy<U>(map: string, fn?: (key: string, items: T[]) => void): { [key: string]: T };
 
 	/**
 	* @see groupBy
 	* @param map Callback function for each element, returns the key for the group the element should be in.
-	* todo: return should be : { [key: U]: any }
 	**/
-	groupBy<U>(map: (element: T) => U, fn?: (group: T) => void ): { [key: string]: any };
+	groupBy<U>(map: (element: T) => U, fn?: (key: string, items: T[]) => void): { [key: string]: T[] };
 
 	/**
 	* Groups the array into <num> arrays.
@@ -2375,8 +2377,9 @@ interface Array<T> {
 	* @example
 	*   [1,2,3,4,5,6,7].inGroups(3)         -> [ [1,2,3], [4,5,6], [7] ]
 	*   [1,2,3,4,5,6,7].inGroups(3, 'none') -> [ [1,2,3], [4,5,6], [7,'none','none'] ]
+	* @note removed because of TSC bug https://typescript.codeplex.com/workitem/1143?FocusElement=CommentTextBox
 	**/
-	inGroups(num: number, padding?: T): T[][];
+	//inGroups(num: number, padding?: T): T[][];
 
 	/**
 	* Groups the array into arrays of <num> elements each.
@@ -2387,8 +2390,9 @@ interface Array<T> {
 	* @example
 	*   [1,2,3,4,5,6,7].inGroupsOf(4)         -> [ [1,2,3,4], [5,6,7] ]
 	*   [1,2,3,4,5,6,7].inGroupsOf(4, 'none') -> [ [1,2,3,4], [5,6,7,'none'] ]
+	* @note removed because of TSC bug https://typescript.codeplex.com/workitem/1143?FocusElement=CommentTextBox
 	**/
-	inGroupsOf(num: number, padding?: T): T[][];
+	//inGroupsOf(num: number, padding?: T): T[][];
 
 	/**
 	* Adds <element> to the array.
@@ -2424,8 +2428,9 @@ interface Array<T> {
 	* @example
 	*   [1,2,3].indexOf(3)           -> 1
 	*   [1,2,3].indexOf(7)           -> -1
+	* @note Already defined in lib.d.ts.
 	**/
-	indexOf(search: T, fromIndex?: number): number;
+	//indexOf(search: T, fromIndex?: number): number;
 
 	/**
 	* Returns an array containing the elements all arrays have in common.
@@ -2447,7 +2452,7 @@ interface Array<T> {
 	*   [].isEmpty()               -> true
 	*   [null,undefined].isEmpty() -> true
 	***/
-	isEmpty(): bool;
+	isEmpty(): boolean;
 
 	/**
 	* Returns the last element(s) in the array.
@@ -2546,7 +2551,7 @@ interface Array<T> {
 	*     return n['a'];
 	*   });                              -> {a:3}
 	**/
-	max(map: string): T;
+	max(map?: string): T;
 
 	/**
 	* @see max
@@ -2564,7 +2569,7 @@ interface Array<T> {
 	/**
 	* @see max
 	**/
-	max<U>(map: (n: T) => U): T[];
+	max<U>(map: (n: T) => U, all: boolean): T[];
 
 	/***
 	* Returns the element in the array with the lowest value.
@@ -2582,7 +2587,7 @@ interface Array<T> {
 	*     return n['a'];
 	*   });                              -> [{a:2}]
 	**/
-	min(map: string): T;
+	min(map?: string): T;
 
 	/**
 	* @see min If true return all min values in the array, default = false.
@@ -2614,7 +2619,7 @@ interface Array<T> {
 	*     return n.age;
 	*   });                              -> [{age:12,name:'bob'},{age:12,name:'ted'}]
 	**/
-	most(map: string): T[];
+	most(map?: string): T[];
 
 	/**
 	* @see most
@@ -2636,13 +2641,13 @@ interface Array<T> {
 	*     return n['a'] > 1;
 	*   });                     -> true
 	**/
-	none(f: T): bool;
+	none(f: T): boolean;
 
 	/**
 	* @see none
 	* @param f Callback function to determine if none of the elements in the array contain a certain value.
 	**/
-	none(f: (n: T) => bool): bool;
+	none(f: (n: T) => boolean): boolean;
 
 	/***
 	* Returns a copy of the array with the elements randomized.
@@ -2716,7 +2721,7 @@ interface Array<T> {
 	* @see remove
 	* @param fn Callback function to check if elements should be removed.
 	**/
-	remove(fn: (n: T) => bool): T[];
+	remove(fn: (n: T) => boolean): T[];
 
 	/**
 	* Removes element at <start>. If [end] is specified, removes the range
@@ -2767,12 +2772,12 @@ interface Array<T> {
 	*   ['a','b','c'].some('a')   -> true
 	*   [{a:2},{b:5}].some({a:2}) -> true
 	**/
-	some(f: T, scope?: any): bool;
+	some(f: T, scope?: any): boolean;
 
 	/**
 	* @see some
 	**/
-	some(f: (n: T) => bool, scope?: any): bool;
+	some(f: (n: T) => boolean, scope?: any): boolean;
 
 	/**
 	* Sorts the array by <map>.
@@ -2792,12 +2797,12 @@ interface Array<T> {
 	*     return n.age;
 	*   });                                        -> [{age:13},{age:18},{age:72}]
 	**/
-	sortBy(map: string, desc?: bool): T[];
+	sortBy(map: string, desc?: boolean): T[];
 
 	/**
 	* @see sortBy
 	**/
-	sortBy<U>(fn: (n: T) => U, desc?: bool): T[];
+	sortBy<U>(fn: (n: T) => U, desc?: boolean): T[];
 
 	/**
 	* Subtracts from the array all elements in [a1], [a2], etc.
@@ -2810,6 +2815,11 @@ interface Array<T> {
 	*   ['a','b'].subtract('b','c') -> ['a']
 	**/
 	subtract(...args: T[]): T[];
+	
+	/**
+	* @see subtract
+	**/
+	subtract(args: T[]): T[];
 
 	/**
 	* Sums all values in the array.
@@ -2825,6 +2835,11 @@ interface Array<T> {
 	*   [{age:35},{age:12},{age:12}].sum('age') -> 59
 	**/
 	sum(map: string): number;
+
+    /**
+    * @see sum
+    **/
+	sum(): number;
 
 	/**
 	* @see sum
@@ -2898,8 +2913,9 @@ interface Array<T> {
 	* @example
 	*   [1,2,3].zip([4,5,6])                                       -> [[1,2], [3,4], [5,6]]
 	*   ['Martin','John'].zip(['Luther','F.'], ['King','Kennedy']) -> [['Martin','Luther','King'], ['John','F.','Kennedy']]
+	* @note removed because of TSC bug https://typescript.codeplex.com/workitem/1143?FocusElement=CommentTextBox
 	**/
-	zip(...arrays: T[]): T[][];
+	//zip(...arrays: T[]): T[][];
 }
 
 interface ObjectStatic {
@@ -2927,7 +2943,7 @@ interface ObjectStatic {
 	*   Object.fromQueryString('foo=bar&broken=wear') -> { foo: 'bar', broken: 'wear' }
 	*   Object.fromQueryString('foo[]=1&foo[]=2')     -> { foo: [1,2] }
 	**/
-	fromQueryString<T extends {}>(str: string, deep?: bool): T;
+	fromQueryString<T extends {}>(str: string, deep?: boolean): T;
 	
 	/**
 	* Returns true if <obj> is an object of that type.
@@ -2955,47 +2971,47 @@ interface ObjectStatic {
 	*   Object.isRegExp(/wasabi/)          -> true
 	*   Object.isObject({ broken:'wear' }) -> true
 	**/
-	isArray(obj: any): bool;
+	isArray(obj: any): boolean;
 
 	/**
 	* @see isArray
 	**/
-	isObject(obj: any): bool;
+	isObject(obj: any): boolean;
 
 	/**
 	* @see isArray
 	**/
-	isBoolean(obj: any): bool;
+	isBoolean(obj: any): boolean;
 
 	/**
 	* @see isArray
 	**/
-	isDate(obj: any): bool;
+	isDate(obj: any): boolean;
 
 	/**
 	* @see isArray
 	**/
-	isFunction(obj: any): bool;
+	isFunction(obj: any): boolean;
 
 	/**
 	* @see isArray
 	**/
-	isNaN(obj: any): bool;
+	isNaN(obj: any): boolean;
 
 	/**
 	* @see isArray
 	**/
-	isNumber(obj: any): bool;
+	isNumber(obj: any): boolean;
 
 	/**
 	* @see isArray
 	**/
-	isString(obj: any): bool;
+	isString(obj: any): boolean;
 
 	/**
 	* @see isArray
 	**/
-	isRegExp(obj: any): bool;
+	isRegExp(obj: any): boolean;
 
 	/**
 	* Converts the object into a query string. Accepts deep nested objects and arrays.
@@ -3019,7 +3035,7 @@ interface ObjectStatic {
 	*   Object.clone()                       -> {}
 	*   Object.extended({foo:'bar'}).clone() -> { foo: 'bar' }
 	**/
-	clone<T extends {}>(obj?: T, deep?: bool): T;
+	clone<T extends {}>(obj?: T, deep?: boolean): T;
 
 	/**
 	* Enumerable methods in the Array package are also available to
@@ -3063,32 +3079,32 @@ interface ObjectStatic {
 	/**
 	* @see map
 	**/
-	any(obj: any, map: string): bool;
+	any(obj: any, map: string): boolean;
 
 	/**
 	* @see map
 	**/
-	any(obj: any, map: (key: string, value: any) => bool): bool;
+	any(obj: any, map: (key: string, value: any) => boolean): boolean;
 
 	/**
 	* @see map
 	**/
-	all(obj: any, map: string): bool;
+	all(obj: any, map: string): boolean;
 
 	/**
 	* @see map
 	**/
-	all(obj: any, map: (key: string, value: any) => bool): bool;
+	all(obj: any, map: (key: string, value: any) => boolean): boolean;
 
 	/**
 	* @see map
 	**/
-	none(obj: any, map: string): bool;
+	none(obj: any, map: string): boolean;
 
 	/**
 	* @see map
 	**/
-	none(obj: any, map: (key: string, value: any) => bool): bool;
+	none(obj: any, map: (key: string, value: any) => boolean): boolean;
 
 	/**
 	* @see map
@@ -3098,7 +3114,7 @@ interface ObjectStatic {
 	/**
 	* @see map
 	**/
-	count(obj: any, map: (key: string, value: any) => bool): number;
+	count(obj: any, map: (key: string, value: any) => boolean): number;
 
 	/**
 	* @see map
@@ -3108,7 +3124,7 @@ interface ObjectStatic {
 	/**
 	* @see map
 	**/
-	find(obj: any, map: (key: string, value: any) => bool): any;
+	find(obj: any, map: (key: string, value: any) => boolean): any;
 
 	/**
 	* @see map
@@ -3118,7 +3134,7 @@ interface ObjectStatic {
 	/**
 	* @see map
 	**/
-	findAll(obj: any, map: (key: string, value: any) => bool): any[];
+	findAll(obj: any, map: (key: string, value: any) => boolean): any[];
 
 	/**
 	* @see map
@@ -3133,7 +3149,7 @@ interface ObjectStatic {
 	/**
 	* @see map
 	**/
-	isEmpty(obj: any): bool;
+	isEmpty(obj: any): boolean;
 
 	/**
 	* @see map
@@ -3208,7 +3224,7 @@ interface ObjectStatic {
 	*   Object.equal({a:2}, {a:3}) -> false
 	*   Object.extended({a:2}).equals({a:3}) -> false
 	**/
-	equal(a: any, b: any): bool;
+	equal(a: any, b: any): boolean;
 
 	/**
 	* Checks if <obj> has <key> using hasOwnProperty from Object.prototype.
@@ -3224,7 +3240,7 @@ interface ObjectStatic {
 	*   Object.has({ foo: 'bar' }, 'baz') -> false
 	*   Object.has({ hasOwnProperty: true }, 'foo') -> false
 	**/
-	has(obj: any, key: string): bool;
+	has(obj: any, key: string): boolean;
 
 	/**
 	* Returns an array containing the keys in <obj>. Optionally calls [fn] for each key.
@@ -3267,13 +3283,13 @@ interface ObjectStatic {
 	*   }); -> { a:3 }
 	*   Object.extended({a:1}).merge({b:2}) -> { a:1, b:2 }
 	**/
-	merge(target: any, source: any, deep?: bool, resolve?: bool): any;
+	merge(target: any, source: any, deep?: boolean, resolve?: boolean): any;
 
 	/**
 	* @see merge
 	* @param resolve Callback to resolve conflicts in the merge.
 	**/
-	merge(target: any, source: any, deep?: bool, resolve?: (key: string, targetVal: any, sourceVal: any) => any): any;
+	merge(target: any, source: any, deep?: boolean, resolve?: (key: string, targetVal: any, sourceVal: any) => any): any;
 
 	/**
 	* Builds a new object containing all values except those specified in find.
@@ -3375,7 +3391,7 @@ interface ObjectStatic {
 	*   });
 	*
 	**/
-	watch(obj: any, prop: string, fn: (prop: string, oldVal: any, newVal: any) => any): void;
+	watch(obj: any, prop: string, fn: (prop?: string, oldVal?: any, newVal?: any) => any): void;
 }
 
 interface Object {
@@ -3416,47 +3432,47 @@ interface Object {
 	*   Object.isRegExp(/wasabi/)          -> true
 	*   Object.isObject({ broken:'wear' }) -> true
 	**/
-	isArray(): bool;
+	isArray(): boolean;
 
 	/**
 	* @see isArray
 	**/
-	isObject(): bool;
+	isObject(): boolean;
 
 	/**
 	* @see isArray
 	**/
-	isBoolean(): bool;
+	isBoolean(): boolean;
 
 	/**
 	* @see isArray
 	**/
-	isDate(): bool;
+	isDate(): boolean;
 
 	/**
 	* @see isArray
 	**/
-	isFunction(): bool;
+	isFunction(): boolean;
 
 	/**
 	* @see isArray
 	**/
-	isNaN(): bool;
+	isNaN(): boolean;
 
 	/**
 	* @see isArray
 	**/
-	isNumber(): bool;
+	isNumber(): boolean;
 
 	/**
 	* @see isArray
 	**/
-	isString(): bool;
+	isString(): boolean;
 
 	/**
 	* @see isArray
 	**/
-	isRegExp(): bool;
+	isRegExp(): boolean;
 
 	/**
 	* Converts the object into a query string. Accepts deep nested objects and arrays.
@@ -3478,7 +3494,7 @@ interface Object {
 	*   Object.clone()                       -> {}
 	*   Object.extended({foo:'bar'}).clone() -> { foo: 'bar' }
 	**/
-	clone(deep?: bool): any;
+	clone(deep?: boolean): any;
 
 	/**
 	* Enumerable methods in the Array package are also available to
@@ -3522,32 +3538,32 @@ interface Object {
 	/**
 	* @see map
 	**/
-	any(map: string): bool;
+	any(map: string): boolean;
 
 	/**
 	* @see map
 	**/
-	any(map: (key: string, value: any) => bool): bool;
+	any(map: (key: string, value: any) => boolean): boolean;
 
 	/**
 	* @see map
 	**/
-	all(map: string): bool;
+	all(map: string): boolean;
 
 	/**
 	* @see map
 	**/
-	all(map: (key: string, value: any) => bool): bool;
+	all(map: (key: string, value: any) => boolean): boolean;
 
 	/**
 	* @see map
 	**/
-	none(map: string): bool;
+	none(map: string): boolean;
 
 	/**
 	* @see map
 	**/
-	none(map: (key: string, value: any) => bool): bool;
+	none(map: (key: string, value: any) => boolean): boolean;
 
 	/**
 	* @see map
@@ -3557,7 +3573,7 @@ interface Object {
 	/**
 	* @see map
 	**/
-	count(map: (key: string, value: any) => bool): number;
+	count(map: (key: string, value: any) => boolean): number;
 
 	/**
 	* @see map
@@ -3567,7 +3583,7 @@ interface Object {
 	/**
 	* @see map
 	**/
-	find(map: (key: string, value: any) => bool): any;
+	find(map: (key: string, value: any) => boolean): any;
 
 	/**
 	* @see map
@@ -3577,7 +3593,7 @@ interface Object {
 	/**
 	* @see map
 	**/
-	findAll(map: (key: string, value: any) => bool): any[];
+	findAll(map: (key: string, value: any) => boolean): any[];
 
 	/**
 	* @see map
@@ -3592,7 +3608,7 @@ interface Object {
 	/**
 	* @see map
 	**/
-	isEmpty(): bool;
+	isEmpty(): boolean;
 
 	/**
 	* @see map
@@ -3666,7 +3682,7 @@ interface Object {
 	*   Object.equal({a:2}, {a:3}) -> false
 	*   Object.extended({a:2}).equals({a:3}) -> false
 	**/
-	equal(b: any): bool;
+	equal(b: any): boolean;
 
 	/**
 	* Checks if <obj> has <key> using hasOwnProperty from Object.prototype.
@@ -3681,7 +3697,7 @@ interface Object {
 	*   Object.has({ foo: 'bar' }, 'baz') -> false
 	*   Object.has({ hasOwnProperty: true }, 'foo') -> false
 	**/
-	has(key: string): bool;
+	has(key: string): boolean;
 
 	/**
 	* Returns an array containing the keys in <obj>. Optionally calls [fn] for each key.
@@ -3722,13 +3738,13 @@ interface Object {
 	*   }); -> { a:3 }
 	*   Object.extended({a:1}).merge({b:2}) -> { a:1, b:2 }
 	**/
-	merge(source: any, deep?: bool, resolve?: bool): any;
+	merge(source: any, deep?: boolean, resolve?: boolean): any;
 
 	/**
 	* @see merge
 	* @param resolve Callback to resolve conflicts in the merge.
 	**/
-	merge(source: any, deep?: bool, resolve?: (key: string, targetVal: any, sourceVal: any) => any): any;
+	merge(source: any, deep?: boolean, resolve?: (key: string, targetVal: any, sourceVal: any) => any): any;
 
 	/**
 	* Builds a new object containing all values except those specified in find.
@@ -3825,7 +3841,7 @@ interface Object {
 	*   });
 	*
 	**/
-	watch(prop: string, fn: (prop: string, oldVal: any, newVal: any) => any): void;
+	watch(prop: string, fn: (prop?: string, oldVal?: any, newVal?: any) => any): void;
 }
 
 interface Function {
@@ -4040,7 +4056,7 @@ interface RegExp {
 }
 
 interface Locale {
-	plural: bool;
+	plural: boolean;
 	months: string;
 	weekdays: string;
 	units: string;
@@ -4227,42 +4243,42 @@ interface Date {
 	*   Date.create().addDays(5)         -> current time + 5 days
 	*   Date.create().addYears(5)        -> current time + 5 years
 	**/
-	addMilliseconds(num: number, reset?: bool): Date;
+	addMilliseconds(num: number, reset?: boolean): Date;
 
 	/**
 	* @see addMilliseconds
 	**/
-	addSeconds(num: number, reset?: bool): Date;
+	addSeconds(num: number, reset?: boolean): Date;
 
 	/**
 	* @see addMilliseconds
 	**/
-	addMinutes(num: number, reset?: bool): Date;
+	addMinutes(num: number, reset?: boolean): Date;
 
 	/**
 	* @see addMilliseconds
 	**/
-	addHours(num: number, reset?: bool): Date;
+	addHours(num: number, reset?: boolean): Date;
 
 	/**
 	* @see addMilliseconds
 	**/
-	addDays(num: number, reset?: bool): Date;
+	addDays(num: number, reset?: boolean): Date;
 
 	/**
 	* @see addMilliseconds
 	**/
-	addWeeks(num: number, reset?: bool): Date;
+	addWeeks(num: number, reset?: boolean): Date;
 
 	/**
 	* @see addMilliseconds
 	**/
-	addMonths(num: number, reset?: bool): Date;
+	addMonths(num: number, reset?: boolean): Date;
 	
 	/**
 	* @see addMilliseconds
 	**/
-	addYears(num: number, reset?: bool): Date;
+	addYears(num: number, reset?: boolean): Date;
 
 	/**
 	* Sets the date forward.
@@ -4281,7 +4297,7 @@ interface Date {
 	*   new Date().advance(0, 2, 3)     -> 2 months 3 days in the future
 	*   new Date().advance(86400000)    -> 1 day in the future
 	**/
-	advance(set: string, reset?: bool): Date;
+	advance(set: string, reset?: boolean): Date;
 
 	/**
 	* @see advance
@@ -4289,19 +4305,19 @@ interface Date {
 	* @param month MM to advance.
 	* @param day DD to advance.
 	**/
-	advance(year: number, month: number, day: number, reset?: bool): Date;
+	advance(year: number, month: number, day: number, reset?: boolean): Date;
 
 	/**
 	* @see advance
 	* @param milliseconds Milliseconds to advance the date.
 	**/
-	advance(milliseconds: number, reset?: bool): Date;
+	advance(milliseconds: number, reset?: boolean): Date;
 
 	/**
 	* @see advance
 	* @param set Advance the year/month/day of the date from a single object.
 	**/
-	advance(set: DateFields, reset?: bool): Date;
+	advance(set: DateFields, reset?: boolean): Date;
 
 	/**
 	* Sets the date to the beginning of the appropriate unit.
@@ -4388,9 +4404,9 @@ interface Date {
 	*   });                                                      -> ex. 1 day ago
 	**/
 	format(format: string, locale?: string): string;
-	short(): string;
-	long(): string;
-	full(): string;
+    	short(locale?: string): string;
+    	long(locale?: string): string;
+    	full(locale?: string): string;
 
 	/**
 	* Returns a string representation of the offset from UTC time. If [iso]
@@ -4401,7 +4417,7 @@ interface Date {
 	*   new Date().getUTCOffset()     -> "+0900"
 	*   new Date().getUTCOffset(true) -> "+09:00"
 	**/
-	getUTCOffset(iso?: bool): string;
+	getUTCOffset(iso?: boolean): string;
 
 	/**
 	* Gets the date's week (of the year).
@@ -4445,9 +4461,9 @@ interface Date {
 	*   Date.create().is(-6106093200000)       -> false
 	*   Date.create().is(new Date(1776, 6, 4)) -> false
 	**/
-	is(d: string, margin?: number): bool;
-	is(milliseconds: number, margin?: number): bool;
-	is(d: Date, margin?: number): bool;
+	is(d: string, margin?: number): boolean;
+	is(milliseconds: number, margin?: number): boolean;
+	is(d: Date, margin?: number): boolean;
 
 	/**
 	* Returns true if the date is after the <d>.
@@ -4460,9 +4476,9 @@ interface Date {
 	*   new Date().isAfter('tomorrow')  -> false
 	*   new Date().isAfter('yesterday') -> true
 	**/
-	isAfter(d: string, margin?: number): bool;
-	isAfter(milliseconds: number, margin?: number): bool;
-	isAfter(d: Date, margin?: number): bool;
+	isAfter(d: string, margin?: number): boolean;
+	isAfter(milliseconds: number, margin?: number): boolean;
+	isAfter(d: Date, margin?: number): boolean;
 
 	/**
 	* Returns true if the date is before <d>.
@@ -4475,9 +4491,9 @@ interface Date {
 	*   new Date().isBefore('tomorrow')  -> true
 	*   new Date().isBefore('yesterday') -> false
 	**/
-	isBefore(d: string, margin?: number): bool;
-	isBefore(milliseconds: number, margin?: number): bool;
-	isBefore(d: Date, margin?: number): bool;
+	isBefore(d: string, margin?: number): boolean;
+	isBefore(milliseconds: number, margin?: number): boolean;
+	isBefore(d: Date, margin?: number): boolean;
 
 	/**
 	* Returns true if the date falls between <d1> and <d2>.
@@ -4490,9 +4506,9 @@ interface Date {
 	*   new Date().isBetween('yesterday', 'tomorrow')    -> true
 	*   new Date().isBetween('last year', '2 years ago') -> false
 	**/
-	isBefore(start: string, end: string, margin?: number): bool;
-	isBefore(start: number, end: string, margin?: number): bool;
-	isBefore(start: Date, end: Date, margin?: number): bool;
+	isBefore(start: string, end: string, margin?: number): boolean;
+	isBefore(start: number, end: string, margin?: number): boolean;
+	isBefore(start: Date, end: Date, margin?: number): boolean;
 
 	/**
 	* Returns true if the date falls on that day.
@@ -4519,18 +4535,18 @@ interface Date {
 	*   Date.create('yesterday').isWednesday() -> ?
 	*   Date.create('today').isWeekend() -> ?
 	**/
-	isToday(): bool;
-	isYesterday(): bool;
-	isTomorrow(): bool;
-	isWeekday(): bool;
-	isWeekend(): bool;
-	isSunday(): bool;
-	isMonday(): bool;
-	isTuesday(): bool;
-	isWednesday(): bool;
-	isThursday(): bool;
-	isFriday(): bool;
-	isSaturday(): bool;
+	isToday(): boolean;
+	isYesterday(): boolean;
+	isTomorrow(): boolean;
+	isWeekday(): boolean;
+	isWeekend(): boolean;
+	isSunday(): boolean;
+	isMonday(): boolean;
+	isTuesday(): boolean;
+	isWednesday(): boolean;
+	isThursday(): boolean;
+	isFriday(): boolean;
+	isSaturday(): boolean;
 
 	/**
 	* Returns true if the date is in the future.
@@ -4540,7 +4556,7 @@ interface Date {
 	*   Date.create('next week').isFuture() -> true
 	*   Date.create('last week').isFuture() -> false
 	**/
-	isFuture(): bool;
+	isFuture(): boolean;
 
 	/**
 	* Returns true if the date is last week/month/year.
@@ -4555,9 +4571,9 @@ interface Date {
 	*   Date.create('yesterday').isLastMonth() -> probably not...
 	*   Date.create('yesterday').isLastYear()  -> even less likely...
 	**/
-	isLastWeek(): bool;
-	isLastMonth(): bool;
-	isLastYear(): bool;
+	isLastWeek(): boolean;
+	isLastMonth(): boolean;
+	isLastYear(): boolean;
 
 	/**
 	* Returns true if the date is a leap year.
@@ -4566,7 +4582,7 @@ interface Date {
 	* @example
 	*   Date.create('2000').isLeapYear() -> true
 	**/
-	isLeapYear(): bool;
+	isLeapYear(): boolean;
 
 	/**
 	* Returns true if the date is next week/month/year.
@@ -4581,9 +4597,9 @@ interface Date {
 	*   Date.create('tomorrow').isNextMonth() -> probably not...
 	*   Date.create('tomorrow').isNextYear()  -> even less likely...
 	**/
-	isNextWeek(): bool;
-	isNextMonth(): bool;
-	isNextYear(): bool;
+	isNextWeek(): boolean;
+	isNextMonth(): boolean;
+	isNextYear(): boolean;
 
 	/**
 	* Returns true if the date is in the past.
@@ -4593,7 +4609,7 @@ interface Date {
 	*   Date.create('last week').isPast() -> true
 	*   Date.create('next week').isPast() -> false
 	**/
-	isPast(): bool;
+	isPast(): boolean;
 
 	/**
 	* Returns true if the date is this week/month/year.
@@ -4608,9 +4624,9 @@ interface Date {
 	*   Date.create('tomorrow').isThisMonth() -> probably...
 	*   Date.create('tomorrow').isThisYear()  -> signs point to yes...
 	**/
-	isThisWeek(): bool;
-	isThisMonth(): bool;
-	isThisYear(): bool;
+	isThisWeek(): boolean;
+	isThisMonth(): boolean;
+	isThisYear(): boolean;
 
 	/**
 	* Returns true if the date has no timezone offset.
@@ -4621,7 +4637,7 @@ interface Date {
 	*   new Date().isUTC()         -> true or false?
 	*   new Date().toUTC().isUTC() -> true
 	**/
-	isUTC(): bool;
+	isUTC(): boolean;
 
 	/**
 	* Returns true if the date is valid.
@@ -4631,7 +4647,7 @@ interface Date {
 	*   new Date().isValid()         -> true
 	*   new Date('flexor').isValid() -> false
 	**/
-	isValid(): bool;
+	isValid(): boolean;
 
 	/**
 	* @method iso()
@@ -4690,9 +4706,9 @@ interface Date {
 	*   new Date().rewind(0, 2, 3)     -> 2 months 3 days in the past
 	*   new Date().rewind(86400000)    -> 1 day in the past
 	**/
-	rewind(ms: number, reset?: bool): Date;
-	rewind(year: number, month: number, day: number, reset?: bool): Date;
-	rewind(d: DateFields, reset?: bool): Date;
+	rewind(ms: number, reset?: boolean): Date;
+	rewind(year: number, month: number, day: number, reset?: boolean): Date;
+	rewind(d: DateFields, reset?: boolean): Date;
 
 	/**
 	* Sets the date object.
@@ -4710,7 +4726,7 @@ interface Date {
 	**/
 	set(ms: number): Date;
 	set(year: number, month: number, day: number): Date;
-	set(d: DateFields, reset?: bool): Date;
+	set(d: DateFields, reset?: boolean): Date;
 
 	/**
 	* Sets the week (of the year).
@@ -4887,7 +4903,7 @@ interface Date {
 	*   new Date().utc(true)
 	*   new Date().utc(false)
 	**/
-	utc(on?: bool): Date;
+	utc(on?: boolean): Date;
 }
 
 /**
@@ -4908,12 +4924,12 @@ interface DateRange {
 	* @example
 	*   Date.range('2003', '2005').contains(Date.create('2004')) -> true
 	**/
-	contains(d: Date): bool;
+	contains(d: Date): boolean;
 
 	/**
 	* @see contains
 	**/
-	contains(d: DateRange): bool;
+	contains(d: DateRange): boolean;
 
 	/**
 	* Return the duration of the DateRange in milliseconds.
@@ -5021,7 +5037,7 @@ interface DateRange {
 	*   Date.range('2003', '2005').isValid() -> true
 	*   Date.range('2005', '2003').isValid() -> false
 	**/
-	isValid(): bool;
+	isValid(): boolean;
 
 	/**
 	* Returns a string representation of the DateRange.

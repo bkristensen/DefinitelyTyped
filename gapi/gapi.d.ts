@@ -48,7 +48,7 @@ declare module gapi.auth {
         /**
          * The auth scope or scopes to authorize. Auth scopes for individual APIs can be found in their documentation.
          */
-        scope?: any[]
+        scope?: any
     }, callback: (token: GoogleApiOAuth2TokenObject) => any): void;
     /**
      * Initializes the authorization feature. Call this when the client loads to prevent popup blockers from blocking the auth window on gapi.auth.authorize calls.
@@ -65,6 +65,45 @@ declare module gapi.auth {
      * @param token The token to set.
      */
     export function setToken(token: GoogleApiOAuth2TokenObject): void;
+    /**
+     * Initiates the client-side Google+ Sign-In OAuth 2.0 flow.
+     * When the method is called, the OAuth 2.0 authorization dialog is displayed to the user and when they accept, the callback function is called.
+     * @param params
+     */
+    export function signIn(params: {
+        /**
+         * Your OAuth 2.0 client ID that you obtained from the Google Developers Console.
+         */
+        clientid?: string;
+        /**
+         * Directs the sign-in button to store user and session information in a session cookie and HTML5 session storage on the user's client for the purpose of minimizing HTTP traffic and distinguishing between multiple Google accounts a user might be signed into.
+         */
+        cookiepolicy?: string;
+        /**
+         * A function in the global namespace, which is called when the sign-in button is rendered and also called after a sign-in flow completes.
+         */
+        callback?: Function;
+        /**
+         * If true, all previously granted scopes remain granted in each incremental request, for incremental authorization. The default value true is correct for most use cases; use false only if employing delegated auth, where you pass the bearer token to a less-trusted component with lower programmatic authority.
+         */
+        includegrantedscopes?: boolean;
+        /**
+         * If your app will write moments, list the full URI of the types of moments that you intend to write.
+         */
+        requestvisibleactions?: any;
+        /**
+         * The OAuth 2.0 scopes for the APIs that you would like to use as a space-delimited list.
+         */
+        scope?: any;
+        /**
+         * If you have an Android app, you can drive automatic Android downloads from your web sign-in flow.
+         */
+        apppackagename?: string;
+    }): void;
+    /**
+     * Signs a user out of your app without logging the user out of Google. This method will only work when the user is signed in with Google+ Sign-In.
+     */
+    export function signOut(): void;
 }
 
 declare module gapi.client {
@@ -99,15 +138,15 @@ declare module gapi.client {
         /**
          * The HTTP request body (applies to PUT or POST).
          */
-        body?: string;
+        body?: any;
         /**
          * If supplied, the request is executed immediately and no gapi.client.HttpRequest object is returned
          */
         callback?: () => any;
-    }): HttpRequest;
+    }): HttpRequest<any>;
     /**
     * Creates an RPC Request directly. The method name and version identify the method to be executed and the RPC params are provided upon RPC creation.
-    * @param method The method to be executed. 
+    * @param method The method to be executed.
     * @param version The version of the API which defines the method to be executed. Defaults to v1
     * @param rpcParams A key-value pair of the params to supply to this RPC
     */
@@ -140,7 +179,24 @@ declare module gapi.client {
                 status: number;
                 statusText: string;
             }
-            ) => any);
+            ) => any):void;
+            /**
+         * HttpRequest supports promises.
+         */
+        then(success:(response:{
+                result:T;
+                body:string;
+                headers?: any[];
+                status?: number;
+                statusText?: string
+            })=>void,
+            failure:(response:{
+                result:T;
+                body:string;
+                headers?: any[];
+                status?: number;
+                statusText?: string
+            })=>void): void;
     }
     /**
      * Represents an HTTP Batch operation. Individual HTTP requests are added with the add method and the batch is executed using execute.
@@ -166,7 +222,7 @@ declare module gapi.client {
              */
             rawBatchResponse: any
             ) => any
-        });
+        }):void;
         /**
          * Executes all requests in the batch. The supplied callback is executed on success or failure.
          * @param callback The callback to execute when the batch returns.
@@ -180,14 +236,14 @@ declare module gapi.client {
              * is the same response, but as an unparsed JSON-string.
              */
             rawBatchResponse: string
-            ) => any);
+            ) => any):void;
     }
 
     /**
      * Similar to gapi.client.HttpRequest except this object encapsulates requests generated by registered methods.
      */
     export class RpcRequest {
-        
+
         /**
          * Executes the request and runs the supplied callback with the response.
          * @param callback The callback function which executes when the request succeeds or fails.
@@ -201,7 +257,7 @@ declare module gapi.client {
              * is the same as jsonResp, except it is a raw string that has not been parsed. It is typically used when the response is not JSON.
              */
             rawResp: string
-            ) => void );
+            ) => void ):void;
     }
 
 }

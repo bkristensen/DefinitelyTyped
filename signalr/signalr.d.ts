@@ -1,13 +1,13 @@
 // Type definitions for SignalR 1.0
 // Project: http://www.asp.net/signalr
-// Definitions by: Boris Yankov <https://github.com/borisyankov/>
+// Definitions by: Boris Yankov <https://github.com/borisyankov/>, T. Michael Keesey <https://github.com/keesey/>
 // Definitions: https://github.com/borisyankov/DefinitelyTyped
 
 
 /// <reference path="../jquery/jquery.d.ts" />
 
 interface HubMethod {
-    (callback: (data: string) => void );
+    (callback: (data: string) => void ): any;
 }
 
 interface SignalREvents {
@@ -21,6 +21,11 @@ interface SignalREvents {
     onDisconnect: string;
 }
 
+interface SignalRStateChange {
+    oldState: number;
+    newState: number;
+}
+
 interface SignalR {
     events: SignalREvents;
     connectionState: any;
@@ -31,6 +36,8 @@ interface SignalR {
     logging: boolean;
     messageId: string;
     url: string;
+    qs: any;
+    state: number;
 
     (url: string, queryString?: any, logging?: boolean): SignalR;
     hubConnection(url?: string): SignalR;
@@ -42,10 +49,10 @@ interface SignalR {
 
    // createHubProxy(hubName: string): SignalR;
 
-    start(): JQueryPromise;
-    start(callback: () => void ): JQueryPromise;
-    start(settings: ConnectionSettings): JQueryPromise;
-    start(settings: ConnectionSettings, callback: () => void ): JQueryPromise;
+    start(): JQueryPromise<any>;
+    start(callback: () => void ): JQueryPromise<any>;
+    start(settings: ConnectionSettings): JQueryPromise<any>;
+    start(settings: ConnectionSettings, callback: () => void ): JQueryPromise<any>;
 
 
     send(data: string): void;
@@ -53,8 +60,8 @@ interface SignalR {
 
     starting(handler: () => void ): SignalR;
     received(handler: (data: any) => void ): SignalR;
-    error(handler: (error: any) => void ): SignalR;
-    stateChanged(handler: (change: any) => void ): SignalR;
+    error(handler: (error: string) => void ): SignalR;
+    stateChanged(handler: (change: SignalRStateChange) => void ): SignalR;
     disconnected(handler: () => void ): SignalR;
     connectionSlow(handler: () => void ): SignalR;
     sending(handler: () => void ): SignalR;
@@ -64,11 +71,14 @@ interface SignalR {
 
 interface HubProxy {
     (connection: HubConnection, hubName: string): HubProxy;
+    state: any;
+    connection: HubConnection;
+    hubName: string;
     init(connection: HubConnection, hubName: string): void;
     hasSubscriptions(): boolean;
-    on(eventName: string, callback: (...msg) => void ): HubProxy;
-    off(eventName: string, callback: (msg) => void ): HubProxy;
-    invoke(methodName: string, ...args: any[]): JQueryDeferred;
+    on(eventName: string, callback: (...msg: any[]) => void ): HubProxy;
+    off(eventName: string, callback: (msg: any) => void ): HubProxy;
+    invoke(methodName: string, ...args: any[]): JQueryDeferred<any>;
 }
 
 interface HubConnectionSettings {
@@ -79,18 +89,18 @@ interface HubConnectionSettings {
 
 interface HubConnection extends SignalR {
     //(url?: string, queryString?: any, logging?: boolean): HubConnection;
-    proxies;
-    received(callback: (data: { Id; Method; Hub; State; Args; }) => void ): HubConnection;
+    proxies: any;
+    received(callback: (data: { Id: any; Method: any; Hub: any; State: any; Args: any; }) => void ): HubConnection;
     createHubProxy(hubName: string): HubProxy;
 }
 
 interface SignalRfn {
-    init(url, qs, logging);
+    init(url: any, qs: any, logging: any): any;
 }
 
 interface ConnectionSettings {
-    transport?;
-    callback?;
+    transport?: any;
+    callback?: any;
     waitForPageLoad?: boolean;
     jsonp?: boolean;
 }
@@ -98,5 +108,5 @@ interface ConnectionSettings {
 interface JQueryStatic {
     signalR: SignalR;
     connection: SignalR;
-    hubConnection(url?: string, queryString?: any, logging?: boolean): HubConnection;
+    hubConnection(url?: string, options?: HubConnectionSettings): HubConnection;
 }
